@@ -4,11 +4,14 @@
   "description": "Seriously awesome logging library built for Node.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env NODE_ENV=test nyc mocha"
   },
   "nyc": {
     "exclude": [
       "node_modules",
+      "coverage",
+      ".nyc_output",
+      ".git",
       "test"
     ],
     "extension": [
@@ -23,7 +26,8 @@
       "html"
     ],
     "sourceMap": true,
-    "instrument": true
+    "instrument": true,
+    "all": true
   },
   "repository": {
     "type": "git",
@@ -32,7 +36,8 @@
   "keywords": [
     "logger",
     "logging",
-    "typescript"
+    "typescript",
+    "nomatic"
   ],
   "author": "Brian D. Foster <bdfoster89@gmail.com>",
   "license": "ISC",
@@ -44,8 +49,10 @@
     "@types/chai": "^3.4.35",
     "@types/mocha": "^2.2.40",
     "chai": "^3.5.0",
+    "cross-env": "^3.2.4",
     "mocha": "^3.2.0",
     "nyc": "^10.1.2",
+    "source-map-support": "^0.4.14",
     "ts-node": "^3.0.2",
     "typescript": "^2.2.1"
   },

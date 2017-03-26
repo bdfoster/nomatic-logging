@@ -1,7 +1,7 @@
 import {Entry} from './';
 
 export abstract class Transport {
-  constructor(options: Object) {
+  constructor(options: Object = {}) {
     this.init(options);
   }
 

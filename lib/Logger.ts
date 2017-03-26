@@ -11,7 +11,6 @@ export class Logger extends EventEmitter {
   constructor(namespace: string) {
     super();
     this.namespace = namespace;
-    register(this);
 
     for (const level in levels) {
       this[level] = (message: string, data: Object) => {

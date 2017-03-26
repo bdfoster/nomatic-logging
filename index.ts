@@ -3,9 +3,13 @@ import {Instances, Levels} from './lib';
 
 export const instances: Instances = {};
 
+export function create(namespace: string) {
+  register(new Logger(namespace));
+}
+
 export function register(instance: Logger) {
   if (instances.hasOwnProperty(instance.namespace)) {
-    throw new Error('Another Logger instance is already registered under namespace '
+    throw new Error('Another Logger instance is already registered under namespace "'
       + instance.namespace);
   }
 
