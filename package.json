@@ -1,0 +1,43 @@
+{
+  "name": "nomatic-logger",
+  "version": "0.0.0",
+  "description": "Seriously awesome logging library built for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "nyc": {
+    "exclude": [
+      "node_modules",
+      "test"
+    ],
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bdfoster/nomatic-logger.git"
+  },
+  "keywords": [
+    "logger",
+    "logging",
+    "typescript"
+  ],
+  "author": "Brian D. Foster <bdfoster89@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bdfoster/nomatic-logger/issues"
+  },
+  "homepage": "https://github.com/bdfoster/nomatic-logger#readme"
+}
