@@ -1,7 +1,6 @@
 import * as os from 'os';
 import {EventEmitter} from 'events';
-import {register} from '../';
-import {Entry, levels} from './';
+import {Entry, levels, register, instances} from './';
 
 export class Logger extends EventEmitter {
   private _level: string;

@@ -1,7 +1,7 @@
 import 'mocha';
 import {expect} from 'chai';
-import Logger from '../../../lib/Logger';
-import {levels} from '../../../lib';
+import Logger from '../../src/Logger';
+import {levels} from '../../src';
 
 describe('Logger', () => {
   let instance;

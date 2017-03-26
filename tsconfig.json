@@ -13,7 +13,8 @@
     "noLib": false,
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true,
-    "allowJs": true
+    "allowJs": true,
+    "outDir": "./dist"
   },
   "compileOnSave": true
 }
