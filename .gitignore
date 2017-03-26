@@ -41,3 +41,14 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# Typescript declaration files
+*.d.ts
+
+# Regular Javascript files
+lib/*.js
+index.js
+
+# Source maps
+lib/*.js.map
+index.js.map
