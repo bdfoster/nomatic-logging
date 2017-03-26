@@ -1,3 +1,5 @@
+export type MessageTemplate = string;
+
 export interface Entry {
   namespace: string;
   message: string;
@@ -8,5 +10,3 @@ export interface Entry {
 export interface Levels {
   [key: string]: number;
 }
-
-export type MessageTemplate = string;
