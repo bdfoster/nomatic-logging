@@ -1,5 +1,6 @@
 import Logger from './lib/Logger';
-import {Instances} from './lib';
+import {Instances, Levels} from './lib';
+
 export const instances: Instances = {};
 
 export function register(instance: Logger) {
