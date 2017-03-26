@@ -43,12 +43,14 @@ node_modules/
 .env
 
 # Typescript declaration files
-*.d.ts
+**/*.d.ts
 
 # Regular Javascript files
-lib/*.js
+lib/**/*.js
+test/**/*.js
 index.js
 
 # Source maps
-lib/*.js.map
+lib/**/*.js.map
+test/**/*.js.map
 index.js.map

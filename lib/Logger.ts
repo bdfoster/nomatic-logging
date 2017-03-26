@@ -35,7 +35,7 @@ export class Logger extends EventEmitter {
     return entry;
   }
 
-  public send(level: string, message, string, data: Object = null) {
+  public send(level: string, message: string, data: Object = null) {
     if (!levels.hasOwnProperty(level)) {
       throw new Error('Invalid level: ' + level);
     }

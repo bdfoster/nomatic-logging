@@ -31,7 +31,7 @@ describe('Logger', () => {
   });
 
   describe('#send()', () => {
-    it('should emit the entry', (done) => {
+    it('should emit the entry without specifying `data`', (done) => {
       let emitted = false;
 
       instance.once('info', (entry) => {
@@ -45,6 +45,34 @@ describe('Logger', () => {
         emitted = true;
       });
       instance.send('info', 'Test message');
+
+      setTimeout(() => {
+        if (!emitted) {
+          return done(new Error('Did not emit!'));
+        } else {
+          return done();
+        }
+      }, 10);
+    });
+
+    it('should emit the entry while specifying `data`', (done) => {
+      let emitted = false;
+      instance.once('info', (entry) => {
+        expect(entry).to.have.keys([
+          'namespace',
+          'message',
+          'hostname',
+          'createdAt',
+          'level',
+          'data'
+        ]);
+        expect(entry.data).to.have.keys([
+          'bool'
+        ]);
+        expect(entry.data.bool).to.equal(true);
+        emitted = true;
+      });
+      instance.send('info', 'Test message', { bool: true });
 
       setTimeout(() => {
         if (!emitted) {

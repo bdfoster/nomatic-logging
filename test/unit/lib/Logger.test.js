@@ -19,7 +19,7 @@ describe('Logger', () => {
         it('should serialize with specified `level` and `message`', () => {
             const entry = instance.serialize('debug', 'Test message');
             chai_1.expect(entry).to.have.keys([
-                'name',
+                'namespace',
                 'message',
                 'hostname',
                 'createdAt',
@@ -28,11 +28,11 @@ describe('Logger', () => {
         });
     });
     describe('#send()', () => {
-        it('should emit the entry', (done) => {
+        it('should emit the entry without specifying `data`', (done) => {
             let emitted = false;
             instance.once('info', (entry) => {
                 chai_1.expect(entry).to.have.keys([
-                    'name',
+                    'namespace',
                     'message',
                     'hostname',
                     'createdAt',
@@ -50,13 +50,40 @@ describe('Logger', () => {
                 }
             }, 10);
         });
+        it('should emit the entry while specifying `data`', (done) => {
+            let emitted = false;
+            instance.once('info', (entry) => {
+                chai_1.expect(entry).to.have.keys([
+                    'namespace',
+                    'message',
+                    'hostname',
+                    'createdAt',
+                    'level',
+                    'data'
+                ]);
+                chai_1.expect(entry.data).to.have.keys([
+                    'bool'
+                ]);
+                chai_1.expect(entry.data.bool).to.equal(true);
+                emitted = true;
+            });
+            instance.send('info', 'Test message', { bool: true });
+            setTimeout(() => {
+                if (!emitted) {
+                    return done(new Error('Did not emit!'));
+                }
+                else {
+                    return done();
+                }
+            }, 10);
+        });
         it('should throw on an invalid `level`', (done) => {
             try {
                 instance.send('invalid', 'This should not fire!');
                 return done(new Error('Did not throw'));
             }
             catch (error) {
-                if (error.message === 'Invalid log level: invalid') {
+                if (error.message === 'Invalid level: invalid') {
                     return done();
                 }
                 return done(error);
