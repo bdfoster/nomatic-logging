@@ -38,8 +38,11 @@ node_modules/
 # Yarn Integrity file
 .yarn-integrity
 
+# IDEA files (JetBrains)
+.idea/
+
 # dotenv environment variables file
 .env
 
 # Dist
-/dist
+dist/

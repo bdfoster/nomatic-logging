@@ -1,6 +1,10 @@
-src/
-.nyc_output/
-coverage/
-.travis.yml
-.tsconfig.json
+.idea/
+node_modules/
 test/
+.codeclimate.yml
+.travis.yml
+coverage/
+tsconfig.json
+examples/
+.nyc_output/
+src/

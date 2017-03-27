@@ -1,6 +1,7 @@
+
 import * as os from 'os';
-import {EventEmitter} from 'events';
-import {Entry, levels, register, instances} from './';
+import {EventEmitter} from 'nomatic-events';
+import {Entry, levels} from './';
 
 export class Logger extends EventEmitter {
   private _level: string;
@@ -25,7 +26,7 @@ export class Logger extends EventEmitter {
       level: level,
       hostname: os.hostname(),
       createdAt: new Date()
-    }
+    };
 
     if (data) {
       entry.data = data;
