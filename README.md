@@ -41,4 +41,4 @@ The pattern works best in the following fashion:
 
 The mechanisms that "do" something with the log entries are called "Transports" (this is taken from ```winston```). This functionality has not been implemented, but it will be very soon. For now, you can subscribe to a logger using the method in the last example above, as it will never go away.
 
-This library is developed with (TypeScript)[http://www.typescriptlang.org/], and as such, includes definitions. You do not need to use TypeScript to enjoy the benefits of this package.
+This library is developed with [TypeScript](http://www.typescriptlang.org/), and as such, includes definitions. However, you do not even need to know what TypeScript is to use this package. The compiled project is included in the [npm package](http://npmjs.com/package/nomatic-logger).
