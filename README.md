@@ -46,6 +46,8 @@ logger.on('info', (entry) =>
 });
 ```
 
+Because we are using ```EventEmitter``` from [```nomatic-events```](https://www.npmjs.com/package/nomatic-events), event namespaces are also regex-able.
+
 The pattern works best in the following fashion:
   * Library developers create a namespaced Logger instance, and let their users know about it
   * Application developers subscribe to each instance and decide how they want to handle logging (i.e. display to console, send to a database, etc.). Application developers can also create their own namespaced instances for their own logging needs.
