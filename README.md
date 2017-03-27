@@ -6,30 +6,41 @@ Get serious about logging. This library takes the best concepts of
 [bunyan](https://github.com/trentm/node-bunyan) but diverges to create
 an extremely flexible yet elegant logging solution.
 
-To create a logger:
-```javascript
-const logger = require('nomatic-logger');
+## Installation
 
-// logger.create(namespace: string)
-const logger = logging.create('test');
+You can install from [NPM](https://www.npmjs.com/package/nomatic-logger) by doing:
+```bash
+npm install --save nomatic-logger
+```
+
+## Usage
+
+To create a logger (or get an existing Logger instance):
+```javascript
+const logger = require('nomatic-logger')('my.namespace');
+```
+
+To exclusively create a logger on a namespace (or throw if one exists):
+```javascript
+const logger = require('nomatic-logger').create('my.namespace');
 ```
 
 Then, to use it:
 ```javascript
 // log[level](message: string[, data: Object])
-log.info('This is a test message');
+logger.info('This is a test message');
 // with data:
-log.info('This is a test message with data', {
+logger.info('This is a test message with data', {
   isTest: true
 });
 ```
 
 To listen for logging events on a namespace:
 ```javascript
-const logging = require('nomatic-logger');
-logging.instance('test').on('info', (entry) => {
+const logger = require('nomatic-logger')('my.namespace');
+logger.on('info', (entry) =>
   /* `entry` is an object with `namespace`, `message`, `level`,
-   * `hostname`, and `createdAt` fields.
+   * `hostname`, `createdAt`, and optional `data` fields.
    */
   console.log(`[${entry.level}]\t${entry.message}`);
 });
@@ -39,6 +50,6 @@ The pattern works best in the following fashion:
   * Library developers create a namespaced Logger instance, and let their users know about it
   * Application developers subscribe to each instance and decide how they want to handle logging (i.e. display to console, send to a database, etc.). Application developers can also create their own namespaced instances for their own logging needs.
 
-The mechanisms that "do" something with the log entries are called "Transports" (this is taken from ```winston```). This functionality has not been implemented, but it will be very soon. For now, you can subscribe to a logger using the method in the last example above, as it will never go away.
+The mechanisms that "do" something with the log entries are called ```transports``` (this is taken from ```winston```). This functionality has not been implemented, but it will be very soon. For now, you can subscribe to a logger using the method in the last example above, as it will never go away.
 
 This library is developed with [TypeScript](http://www.typescriptlang.org/), and as such, includes definitions. However, you do not even need to know what TypeScript is to use this package. The compiled project is included in the [npm package](http://npmjs.com/package/nomatic-logger).
