@@ -35,7 +35,7 @@ export function create(namespace: string) {
 export function register(instance: Logger) {
   if (instances.hasOwnProperty(instance.namespace)) {
     throw new Error('Another Logger instance is already registered under namespace "'
-      + instance.namespace);
+      + instance.namespace + '"');
   }
 
   instances[instance.namespace] = instance;
