@@ -1,11 +1,8 @@
-
 import * as os from 'os';
 import {EventEmitter} from 'nomatic-events';
 import {Entry, levels} from './';
 
 export class Logger extends EventEmitter {
-  private _level: string;
-
   public readonly namespace: string;
 
   constructor(namespace: string) {

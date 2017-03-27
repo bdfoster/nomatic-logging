@@ -21,7 +21,7 @@
   "reporter": [
     "text-summary"
   ],
-  "sourceMap": true,
+  "produce-source-map": true,
   "instrument": true,
   "all": true
 }

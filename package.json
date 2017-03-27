@@ -3,9 +3,11 @@
   "version": "0.0.5",
   "description": "Seriously awesome logging library built for Node.js",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "compile": "tsc",
     "test": "cross-env NODE_ENV=test nyc mocha",
+    "coverage": "nyc report --reporter=html",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {

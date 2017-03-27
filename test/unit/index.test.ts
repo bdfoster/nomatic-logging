@@ -1,7 +1,6 @@
 import 'mocha';
 import {expect} from 'chai';
-import Logger from '../../src/Logger';
-import {create, register, instance} from '../../src';
+import {create, register, find, get, Logger} from '../../src';
 
 describe('create()', () => {
   it('should create a Logger with specified `namespace`', () => {
@@ -23,7 +22,7 @@ describe('register()', () => {
       register(logger);
       return done(new Error('Did not throw!'));
     } catch (error) {
-      if (error.message === 'Another Logger instance is already registered under namespace "test5"') {
+      if (error.message === 'Logger already registered to namespace: test5') {
         return done();
       }
 
@@ -32,21 +31,20 @@ describe('register()', () => {
   });
 });
 
-describe('instance()', () => {
-  it('should get a pre-existing Logger instance', () => {
-    create('test3');
-    expect(instance('test3').namespace).to.equal('test3');
+describe('find()', () => {
+  it('should return a Logger already registered to a namespace', () => {
+    create('test6');
+    expect(find('test6')).to.not.be.null;
   });
 
-  it('should throw on an un-registered namespace', (done) => {
-    try {
-      instance('test4');
-      return done(new Error('Did not throw!'));
-    } catch(error) {
-      if (error.message === 'Namespace "test4" is not registered') {
-        return done();
-      }
-      return done(error);
-    }
+  it('should return null if no logger is registered in namespace', () => {
+    expect(find('superloggerthing')).to.be.null;
+  });
+});
+
+describe('get()', () => {
+  it('should either find existing or create new logger', () => {
+    const logger = create('test29340234');
+    expect(logger).to.equal(get(logger.namespace));
   });
 });

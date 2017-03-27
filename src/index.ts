@@ -1,4 +1,7 @@
-import Logger from './Logger'
+import 'source-map-support/register';
+import Logger from './Logger';
+export * from './Transport';
+export * from './Logger';
 
 export interface Entry {
   namespace: string;
@@ -13,11 +16,7 @@ export interface Levels {
   [key: string]: number;
 }
 
-export interface Instances {
-  [key: string]: Logger;
-}
-
-export const levels = {
+export const levels: Levels = {
   trace: 50,
   debug: 40,
   info: 30,
@@ -25,26 +24,41 @@ export const levels = {
   error: 10
 };
 
-export const instances: Instances = {};
+export const instances: Logger[] = [];
 
 export function create(namespace: string) {
-  register(new Logger(namespace));
-  return instances[namespace];
+  const logger = new Logger(namespace);
+  register(logger);
+  return logger;
 }
 
-export function register(instance: Logger) {
-  if (instances.hasOwnProperty(instance.namespace)) {
-    throw new Error('Another Logger instance is already registered under namespace "'
-      + instance.namespace + '"');
+export function find(namespace: string) {
+  for (const i in instances) {
+    if (instances[i].namespace === namespace) {
+      return instances[i];
+    }
+  }
+  return null;
+}
+
+export function get(namespace: string) {
+  let result = find(namespace);
+
+  if (result) {
+    return result;
   }
 
-  instances[instance.namespace] = instance;
+  return create(namespace);
 }
 
-export function instance(namespace: string) {
-  if (instances.hasOwnProperty(namespace)) {
-    return instances[namespace];
+export function register(logger: Logger) {
+  if (!find(logger.namespace)) {
+    instances.push(logger);
+    return;
   }
 
-  throw new Error('Namespace "' + namespace + '" is not registered');
+  throw new Error('Logger already registered to namespace: ' + logger.namespace);
+
 }
+
+export default get;
