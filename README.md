@@ -37,4 +37,8 @@ logging.instance('test').on('info', (entry) => {
 
 The pattern works best in the following fashion:
   * Library developers create a namespaced Logger instance, and let their users know about it
-  * Application developers subscribe to each instance and decide how they want to handle logging (i.e. display to console, send to a database, etc.). Application developers can also create their own namespaced instances as for their own logging needs.
+  * Application developers subscribe to each instance and decide how they want to handle logging (i.e. display to console, send to a database, etc.). Application developers can also create their own namespaced instances for their own logging needs.
+
+The mechanisms that "do" something with the log entries are called "Transports" (this is taken from ```winston```). This functionality has not been implemented, but it will be very soon. For now, you can subscribe to a logger using the method in the last example above, as it will never go away.
+
+This library is developed with (TypeScript)[http://www.typescriptlang.org/], and as such, includes definitions. You do not need to use TypeScript to enjoy the benefits of this package.
