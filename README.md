@@ -8,7 +8,7 @@ an extremely flexible yet elegant logging solution.
 
 To create a logger:
 ```javascript
-const logger = require('nomatic-logging');
+const logger = require('nomatic-logger');
 
 // logger.create(namespace: string)
 const logger = logging.create('test');
