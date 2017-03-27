@@ -1,5 +1,5 @@
 # nomatic-logger
-[![Build Status](https://travis-ci.org/bdfoster/nomatic-logger.svg?branch=master)](https://travis-ci.org/bdfoster/nomatic-logger)
+[![Build Status](https://travis-ci.org/bdfoster/nomatic-logger.svg?branch=master)](https://travis-ci.org/bdfoster/nomatic-logger) [![Coverage Status](https://coveralls.io/repos/github/bdfoster/nomatic-logger/badge.svg?branch=master)](https://coveralls.io/github/bdfoster/nomatic-logger?branch=master)
 
 Get serious about logging. This library takes the best concepts of
 [winston](https://github.com/winstonjs/winston) and
