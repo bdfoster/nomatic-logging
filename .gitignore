@@ -23,7 +23,6 @@ coverage
 # Dependency directories
 node_modules/
 
-
 # Optional npm cache directory
 .npm
 
@@ -42,18 +41,5 @@ node_modules/
 # dotenv environment variables file
 .env
 
-# Typescript output files
+# Dist
 /dist
-
-# Typescript declaration files
-**/*.d.ts
-
-# Regular Javascript files
-lib/**/*.js
-test/**/*.js
-index.js
-
-# Source maps
-lib/**/*.js.map
-test/**/*.js.map
-index.js.map

@@ -1,9 +1,10 @@
 {
-  "name": "nomatic-logger",
+  "name": "@nomatic/logger",
   "version": "0.0.0",
   "description": "Seriously awesome logging library built for Node.js",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
     "test": "cross-env NODE_ENV=test nyc mocha",
     "coveralls": "npm test && nyc report --reporter=text-lcov | coveralls"
   },

@@ -9,7 +9,7 @@ describe('create()', () => {
   });
 });
 
-describe('register', () => {
+describe('register()', () => {
   it('should register a pre-existing Logger instance', () => {
     const logger = new Logger('test2');
     register(logger);
@@ -32,7 +32,7 @@ describe('register', () => {
   });
 });
 
-describe('instance', () => {
+describe('instance()', () => {
   it('should get a pre-existing Logger instance', () => {
     create('test3');
     expect(instance('test3').namespace).to.equal('test3');
