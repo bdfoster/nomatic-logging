@@ -1,13 +1,48 @@
 import * as os from 'os';
 import {EventEmitter} from 'nomatic-events';
-import {Entry, levels} from './';
+import Transport from './Transport';
+
+export interface Entry {
+  namespace: string;
+  level: string;
+  message: string;
+  createdAt: Date;
+  hostname: string;
+  data?: Object;
+}
+
+export interface Levels {
+  [key: string]: number;
+}
+
+export const levels: Levels = {
+  trace: 50,
+  debug: 40,
+  info: 30,
+  warn: 20,
+  error: 10
+};
+
+
+export interface LoggerOptions {
+  namespace: string;
+  level?: string;
+  transports?: Transport[];
+}
 
 export class Logger extends EventEmitter {
+  protected transports: Transport[] = [];
   public readonly namespace: string;
 
-  constructor(namespace: string) {
+  constructor(options: LoggerOptions) {
     super();
-    this.namespace = namespace;
+    this.namespace = options.namespace;
+
+    if (options.transports) {
+      for (const i in options.transports) {
+        this.subscribe(options.transports[i]);
+      }
+    }
 
     for (const level in levels) {
       this[level] = (message: string, data: Object) => {
@@ -38,7 +73,20 @@ export class Logger extends EventEmitter {
     }
 
     const entry = this.serialize(level, message, data);
+    this.emit('entry', entry);
     this.emit(level, entry);
+  }
+
+  public subscribe(transport: Transport) {
+    if (this.transports.indexOf(transport) !== -1) {
+      throw new Error('Transport already subscribed to "' + this.namespace + '" namespace');
+    }
+
+    this.transports.push(transport);
+
+    this.on('entry', (entry) => {
+      transport.push(entry);
+    })
   }
 }
 

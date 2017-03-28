@@ -1,33 +1,16 @@
 import 'source-map-support/register';
-import Logger from './Logger';
-export * from './Transport';
+import {Logger, LoggerOptions} from './Logger';
+import ConsoleTransport from './transports/ConsoleTransport';
 export * from './Logger';
 
-export interface Entry {
-  namespace: string;
-  level: string;
-  message: string;
-  createdAt: Date;
-  hostname: string;
-  data?: Object;
-}
-
-export interface Levels {
-  [key: string]: number;
-}
-
-export const levels: Levels = {
-  trace: 50,
-  debug: 40,
-  info: 30,
-  warn: 20,
-  error: 10
-};
+export const DEFAULT_TRANSPORT = new ConsoleTransport({
+  level: 'debug'
+});
 
 export const instances: Logger[] = [];
 
-export function create(namespace: string) {
-  const logger = new Logger(namespace);
+export function create(options: LoggerOptions) {
+  const logger = new Logger(options);
   register(logger);
   return logger;
 }
@@ -48,7 +31,12 @@ export function get(namespace: string) {
     return result;
   }
 
-  return create(namespace);
+  return create({
+    namespace: namespace,
+    transports: [
+      DEFAULT_TRANSPORT
+    ]
+  });
 }
 
 export function register(logger: Logger) {
@@ -58,7 +46,6 @@ export function register(logger: Logger) {
   }
 
   throw new Error('Logger already registered to namespace: ' + logger.namespace);
-
 }
 
 export default get;

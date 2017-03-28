@@ -2,12 +2,13 @@ import 'mocha';
 import {expect} from 'chai';
 import Logger from '../../src/Logger';
 import {levels} from '../../src';
+import TestTransport from '../fixtures/TestTransport';
 
 describe('Logger', () => {
   let instance;
 
   beforeEach(() => {
-    instance = new Logger('test');
+    instance = new Logger({namespace: 'test'});
   });
 
   describe('#constructor()', () => {
@@ -95,6 +96,47 @@ describe('Logger', () => {
       }
     });
   });
+
+  describe('#subscribe()', () => {
+    const transport = new TestTransport({
+      level: 'info'
+    });
+
+    it('should subscribe a Transport instance to the Logger instance', (done) => {
+      let emitted = false;
+      instance.subscribe(transport);
+
+      transport.emitter.on('info', () => {
+        emitted = true;
+      });
+
+      instance.send('info', 'Test message');
+
+      setTimeout(() => {
+        if (!emitted) {
+          return done(new Error('Did not emit!'));
+        } else {
+          return done();
+        }
+      }, 10);
+    });
+
+
+
+    it('should throw when attempting to subscribe an already subscribed transport', (done) => {
+      instance.subscribe(transport);
+      try {
+        instance.subscribe(transport);
+        return done(new Error('Did not throw!'));
+      } catch(error) {
+        if (error.message.startsWith('Transport already subscribed to')) {
+          return done();
+        }
+        return done(error);
+      }
+    });
+  });
+
   describe("#[level]()", () => {
     it('should have generated instance methods corresponding to levels available', (done) => {
       const triggeredLevels = [];

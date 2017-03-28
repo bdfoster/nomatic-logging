@@ -1,19 +1,42 @@
-import {Entry} from './';
+
+import {Entry, levels} from './';
+import {EventListener} from 'nomatic-events';
+
+
+export interface TransportOptions {
+  level: string;
+}
+
+export interface TransportListeners {
+  [key: string]: EventListener;
+}
 
 export abstract class Transport {
-  constructor(options: Object = {}) {
-    this.init(options);
+  private _level: string;
+
+  constructor(options: TransportOptions) {
+    this.level = options.level;
   }
 
-  public abstract init(options: Object);
+  public get level() {
+    return this._level;
+  }
 
-  public abstract send(entry: Entry);
+  public set level(value: string) {
+    if (!levels.hasOwnProperty(value)) {
+      throw new Error('Invalid level: ' + value);
+    }
 
-  public open() {
-    return;
-  };
-  public close() {
-    return;
-  };
+    this._level = value;
+  }
+
+  public abstract send(entry: Entry): void;
+
+  public push(entry: Entry) {
+    if (levels[entry.level] <= levels[this.level]) {
+      this.send(entry);
+    }
+  }
 }
+
 export default Transport;
