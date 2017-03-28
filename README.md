@@ -8,7 +8,7 @@ an extremely flexible yet elegant logging solution.
 
 ## Installation
 
-You can install from [NPM](https://www.npmjs.com/package/nomatic-logging) by doing:
+You can install from [npm](https://www.npmjs.com/package/nomatic-logging) by doing:
 ```bash
 npm install --save nomatic-logging
 ```
@@ -78,13 +78,33 @@ logger.on(/(info|debug)/, (entry) => {
 })
 ```
 
-The pattern works best in the following fashion:
-  * Library developers ```create``` a namespace, and let their users know about it.
-  * Application developers subscribe to each instance and decide how they want to handle logging (i.e. display to 
-  console, send to a database, etc.). Application developers can also create their own namespaced instances for their own logging needs.
-
-
-
+## Typescript
 This library is developed with [TypeScript](http://www.typescriptlang.org/), and as such, includes definitions. 
 However, you do not even need to know what TypeScript is to use this package. The compiled project is included in the 
 [npm package](http://npmjs.com/package/nomatic-logging).
+
+## Testing
+You can run tests by doing:
+```bash
+npm test
+```
+A summary of code coverage shows up at the end of the output, but if you want the HTML site, do:
+```bash
+npm run coverage
+```
+I do strive for 100% code coverage since this is a very small library. I would ask for the same when submitting a PR.
+If you need help with writing tests, ping me and I will either write them for you (if it's small enough) or give you
+guidance on how to do so.
+
+## Contributing / Support
+Please note that this software is in the early stages of development, but is in production use in several of my
+personal projects and university/work endeavors.
+
+Pull requests are absolutely welcome, and issues can be raised for questions or bugs. I do understand the documentation is a 
+little sparse at the moment, and I'm certainly working to expand that very, very soon. If you need help using the
+library, submit an issue for it and I'll be sure to document it (first in the issue itself, then in the actual 
+documentation).
+
+Please remember that this is something I maintain and build upon in my spare time. If you need paid support for a 
+particular solution, feature, or bug, please feel free to send me a message. Generally speaking, I'm very responsive
+during the work week.
