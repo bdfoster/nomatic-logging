@@ -1,5 +1,5 @@
 {
-  "name": "nomatic-loggong",
+  "name": "nomatic-logging",
   "version": "0.1.0",
   "description": "Seriously awesome logging library built for Node.js",
   "main": "dist/index.js",
