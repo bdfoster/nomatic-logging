@@ -16,7 +16,7 @@ script:
   - npm test
   - npm run coveralls
 before_deploy:
-  - npm run build
+  - npm run compile
 deploy:
   provider: npm
   email: bdfoster89@gmail.com
