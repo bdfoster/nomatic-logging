@@ -1,6 +1,8 @@
 import * as os from 'os';
 import {EventEmitter} from 'nomatic-events';
 import Transport from './Transport';
+import * as format from 'string-format';
+import * as util from 'util';
 
 export interface Entry {
   namespace: string;
@@ -27,12 +29,14 @@ export const levels: Levels = {
 export interface LoggerOptions {
   namespace: string;
   level?: string;
+  template?: string;
   transports?: Transport[];
 }
 
 export class Logger extends EventEmitter {
   protected transports: Transport[] = [];
   public readonly namespace: string;
+  public template: string = null;
 
   constructor(options: LoggerOptions) {
     super();
@@ -44,10 +48,14 @@ export class Logger extends EventEmitter {
       }
     }
 
+    if (options.template) {
+      this.template = options.template;
+    }
+
     for (const level in levels) {
-      this[level] = (message: string, data: Object) => {
-        this.send(level, message, data);
-      }
+      this[level] = (messageOrData: string | Object, data?: Object) => {
+        return this.send(level, messageOrData, data);
+      };
     }
   }
 
@@ -67,9 +75,21 @@ export class Logger extends EventEmitter {
     return entry;
   }
 
-  public send(level: string, message: string, data: Object = null) {
+  public send(level: string, messageOrData: string | Object, data?: Object) {
+    let message: string;
     if (!levels.hasOwnProperty(level)) {
       throw new Error('Invalid level: ' + level);
+    }
+
+    if (typeof messageOrData !== 'string') {
+      if (!this.template) {
+        throw new Error('`message` is not specified and `template` is not defined');
+      } else {
+        message = format(this.template, messageOrData);
+        data = messageOrData;
+      }
+    } else {
+      message = messageOrData;
     }
 
     const entry = this.serialize(level, message, data);

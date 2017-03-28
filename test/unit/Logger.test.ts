@@ -17,6 +17,15 @@ describe('Logger', () => {
       expect(instance).to.exist;
       expect(instance.namespace).to.equal('test');
     });
+
+    it('should create a new instance with specified `namespace` and `template`', () => {
+      instance = new Logger({
+        namespace: 'test',
+        template: '{string[0]} {string[1]} {string[2]}',
+      });
+
+      expect(instance.template).to.exist;
+    });
   });
 
   describe('#serialize()', () => {
@@ -33,7 +42,7 @@ describe('Logger', () => {
   });
 
   describe('#send()', () => {
-    it('should emit the entry without specifying `data`', (done) => {
+    it('should emit the entry while specifying `message`', (done) => {
       let emitted = false;
 
       instance.once('info', (entry) => {
@@ -57,7 +66,7 @@ describe('Logger', () => {
       }, 10);
     });
 
-    it('should emit the entry while specifying `data`', (done) => {
+    it('should emit the entry while specifying `message` and `data`', (done) => {
       let emitted = false;
       instance.once('info', (entry) => {
         expect(entry).to.have.keys([
@@ -83,6 +92,58 @@ describe('Logger', () => {
           return done();
         }
       }, 10);
+    });
+
+    it('should emit the entry while specifying `data` using instance `template` to generate `message`', (done) => {
+      let emitted = false;
+      instance.template = '{string0} {string1} {string2}';
+      instance.once('info', (entry) => {
+        expect(entry).to.have.keys([
+          'namespace',
+          'message',
+          'hostname',
+          'createdAt',
+          'level',
+          'data'
+        ]);
+        expect(entry.data).to.have.keys([
+          'string0',
+          'string1',
+          'string2',
+          'bool'
+        ]);
+        expect(entry.message).to.equal('Test message using template');
+        expect(entry.data.bool).to.equal(true);
+        emitted = true;
+      });
+      instance.send('info', {
+        bool: true,
+        string0: 'Test',
+        string1: 'message',
+        string2: 'using template'
+      });
+
+      setTimeout(() => {
+        if (!emitted) {
+          return done(new Error('Did not emit!'));
+        } else {
+          return done();
+        }
+      }, 10);
+    });
+
+    it('should throw if no `template`', (done) => {
+      try {
+        instance.send('info', {
+          string0: 'Test'
+        });
+        return done(new Error('Did not throw!'));
+      } catch (error) {
+        if (error.message === '`message` is not specified and `template` is not defined') {
+          return done();
+        }
+        return done(error);
+      }
     });
 
     it('should throw on an invalid `level`', (done) => {
@@ -147,13 +208,15 @@ describe('Logger', () => {
     });
   });
 
-  describe("#[level]()", () => {
-    it('should have generated instance methods corresponding to levels available', (done) => {
+  describe("#{level}()", () => {
+    it('should call #send() when specifying `message`', (done) => {
       const triggeredLevels = [];
+      instance.template = '{string0} {string1}';
       instance.level = 'debug';
       for (const level of Object.keys(levels)) {
-        instance.once(level, () => {
+        instance.on(level, (entry) => {
           triggeredLevels.push(level);
+          expect(entry.message).to.equal('Test message');
 
           for (const lvl of Object.keys(levels)) {
             if (triggeredLevels.indexOf(lvl) === -1) {
