@@ -1,8 +1,9 @@
 import 'mocha';
 import {expect} from 'chai';
-import Logger from '../../src/Logger';
+import {Logger} from '../../src/';
 import {levels} from '../../src';
-import TestTransport from '../fixtures/TestTransport';
+import {Transport} from '../../src';
+import {EventEmitter} from 'nomatic-events';
 
 describe('Logger', () => {
   let instance;
@@ -98,15 +99,24 @@ describe('Logger', () => {
   });
 
   describe('#subscribe()', () => {
-    const transport = new TestTransport({
-      level: 'info'
+    let emitter: EventEmitter;
+    let transport: Transport;
+    beforeEach(() => {
+      emitter = new EventEmitter();
+      transport = new Transport({
+        level: 'info',
+        handler(entry) {
+          emitter.emit(entry.level, entry);
+        }
+      });
     });
+
 
     it('should subscribe a Transport instance to the Logger instance', (done) => {
       let emitted = false;
       instance.subscribe(transport);
 
-      transport.emitter.on('info', () => {
+      emitter.on('info', () => {
         emitted = true;
       });
 

@@ -1,9 +1,11 @@
 import 'source-map-support/register';
 import {Logger, LoggerOptions} from './Logger';
-import ConsoleTransport from './transports/ConsoleTransport';
 export * from './Logger';
+export * from './Transport';
 
-export const DEFAULT_TRANSPORT = new ConsoleTransport({
+export const transport = require('./transport');
+
+const DEFAULT_TRANSPORT = transport.console({
   level: 'debug'
 });
 

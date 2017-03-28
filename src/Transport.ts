@@ -1,21 +1,28 @@
-
 import {Entry, levels} from './';
-import {EventListener} from 'nomatic-events';
 
+export type TransportHandler = (entry: Entry) => void;
 
 export interface TransportOptions {
   level: string;
+  handler: TransportHandler;
+  [key: string]: any;
 }
 
-export interface TransportListeners {
-  [key: string]: EventListener;
-}
-
-export abstract class Transport {
+export class Transport {
   private _level: string;
+  private _handler: (entry: Entry) => void;
 
   constructor(options: TransportOptions) {
     this.level = options.level;
+    this.handler = options.handler;
+  }
+
+  public get handler(): TransportHandler {
+    return this._handler;
+  }
+
+  public set handler(value: TransportHandler) {
+    this._handler = value;
   }
 
   public get level() {
@@ -30,11 +37,9 @@ export abstract class Transport {
     this._level = value;
   }
 
-  public abstract send(entry: Entry): void;
-
   public push(entry: Entry) {
     if (levels[entry.level] <= levels[this.level]) {
-      this.send(entry);
+      this.handler(entry);
     }
   }
 }

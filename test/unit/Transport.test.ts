@@ -1,18 +1,25 @@
 import 'mocha';
 import {expect} from 'chai';
-import {Transport} from '../../src/Transport';
-import TestTransport from '../fixtures/TestTransport';
+import Transport from '../../src/Transport';
+import {EventEmitter} from 'nomatic-events';
 describe('Transport', () => {
-  let instance;
+  let emitter: EventEmitter;
+  let instance: Transport;
   beforeEach(() => {
-    instance = new TestTransport({level: 'info'});
+    emitter = new EventEmitter();
+    instance = new Transport({
+      level: 'info',
+      handler(entry) {
+        emitter.emit('entry', entry);
+      }
+    });
   });
 
   describe('#constructor()', () => {
     it('should create a new instance', () => {
       expect(instance).to.have.keys([
         '_level',
-        'emitter'
+        '_handler'
       ]);
     });
   });
@@ -20,7 +27,7 @@ describe('Transport', () => {
   describe('#push()', () => {
     it('should call #send() on the default level', (done) => {
       let emitted = false;
-      instance.emitter.once('info', () => {
+      emitter.once('entry', () => {
         emitted = true;
       });
 
@@ -43,7 +50,7 @@ describe('Transport', () => {
 
     it('should not call #send() on a higher level', (done) => {
       let emitted = false;
-      instance.emitter.once('debug', () => {
+      emitter.once('debug', () => {
         emitted = true;
       });
 
@@ -66,7 +73,7 @@ describe('Transport', () => {
 
     it('should call #send() on a lower level', (done) => {
       let emitted = false;
-      instance.emitter.once('error', () => {
+      emitter.once('entry', () => {
         emitted = true;
       });
 
