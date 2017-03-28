@@ -1,5 +1,5 @@
-# nomatic-logger
-[![Build Status](https://travis-ci.org/bdfoster/nomatic-logger.svg?branch=master)](https://travis-ci.org/bdfoster/nomatic-logger) [![Coverage Status](https://coveralls.io/repos/github/bdfoster/nomatic-logger/badge.svg?branch=master)](https://coveralls.io/github/bdfoster/nomatic-logger?branch=master)
+# nomatic-logging
+[![Build Status](https://travis-ci.org/bdfoster/nomatic-logging.svg?branch=master)](https://travis-ci.org/bdfoster/nomatic-logging [![Coverage Status](https://coveralls.io/repos/github/bdfoster/nomatic-logging/badge.svg?branch=master)](https://coveralls.io/github/bdfoster/nomatic-logging?branch=master)
 
 Get serious about logging. This library takes the best concepts of
 [winston](https://github.com/winstonjs/winston) and
@@ -8,21 +8,21 @@ an extremely flexible yet elegant logging solution.
 
 ## Installation
 
-You can install from [NPM](https://www.npmjs.com/package/nomatic-logger) by doing:
+You can install from [NPM](https://www.npmjs.com/package/nomatic-logging) by doing:
 ```bash
-npm install --save nomatic-logger
+npm install --save nomatic-logging
 ```
 
 ## Basic Usage
 
-To create a logger (or get an existing Logger instance):
+To create a ```Logger``` (or get an existing Logger instance):
 ```javascript
-const logger = require('nomatic-logger')('my.namespace');
+const logger = require('nomatic-logging')('my.namespace');
 ```
 ...which is equivalent to (if the namespace is not already taken):
 ```javascript
 
-const logging = require('nomatic-logger');
+const logging = require('nomatic-logging');
 const logger = logging.create({
     namespace: 'my.namespace',
     transports: [
@@ -80,8 +80,11 @@ logger.on(/(info|debug)/, (entry) => {
 
 The pattern works best in the following fashion:
   * Library developers ```create``` a namespace, and let their users know about it.
-  * Application developers subscribe to each instance and decide how they want to handle logging (i.e. display to console, send to a database, etc.). Application developers can also create their own namespaced instances for their own logging needs.
+  * Application developers subscribe to each instance and decide how they want to handle logging (i.e. display to 
+  console, send to a database, etc.). Application developers can also create their own namespaced instances for their own logging needs.
 
 
 
-This library is developed with [TypeScript](http://www.typescriptlang.org/), and as such, includes definitions. However, you do not even need to know what TypeScript is to use this package. The compiled project is included in the [npm package](http://npmjs.com/package/nomatic-logger).
+This library is developed with [TypeScript](http://www.typescriptlang.org/), and as such, includes definitions. 
+However, you do not even need to know what TypeScript is to use this package. The compiled project is included in the 
+[npm package](http://npmjs.com/package/nomatic-logging).
