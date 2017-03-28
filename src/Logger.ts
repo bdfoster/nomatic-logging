@@ -2,7 +2,6 @@ import * as os from 'os';
 import {EventEmitter} from 'nomatic-events';
 import Transport from './Transport';
 import * as format from 'string-format';
-import * as util from 'util';
 
 export interface Entry {
   namespace: string;
