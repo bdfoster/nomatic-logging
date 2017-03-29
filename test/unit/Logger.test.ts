@@ -13,6 +13,10 @@ describe('Logger', () => {
   });
 
   describe('#constructor()', () => {
+    it('should initialize a new instance', () => {
+      expect(new Logger()).to.exist;
+    });
+
     it('should initialize a new instance with specified `namespace`', () => {
       expect(instance).to.exist;
       expect(instance.namespace).to.equal('test');

@@ -4,7 +4,7 @@ import Transport from './Transport';
 import * as format from 'string-format';
 
 export interface Entry {
-  namespace: string;
+  namespace?: string;
   level: string;
   message: string;
   createdAt: Date;
@@ -24,9 +24,8 @@ export const levels: Levels = {
   error: 10
 };
 
-
 export interface LoggerOptions {
-  namespace: string;
+  namespace?: string;
   level?: string;
   template?: string;
   transports?: Transport[];
@@ -34,28 +33,26 @@ export interface LoggerOptions {
 
 export class Logger extends EventEmitter {
   protected transports: Transport[] = [];
-  public readonly namespace: string;
+  private _namespace: string = null;
   public template: string = null;
 
-  constructor(options: LoggerOptions) {
+  constructor(options: LoggerOptions = {}) {
     super();
-    this.namespace = options.namespace;
-
-    if (options.transports) {
-      for (const i in options.transports) {
-        this.subscribe(options.transports[i]);
-      }
-    }
-
-    if (options.template) {
-      this.template = options.template;
-    }
+    this.configure(options);
 
     for (const level in levels) {
       this[level] = (messageOrData: string | Object, data?: Object) => {
         return this.send(level, messageOrData, data);
       };
     }
+  }
+
+  public get namespace() {
+    return this._namespace;
+  }
+
+  public set namespace(value: string) {
+    this._namespace = value;
   }
 
   private serialize(level: string, message: string, data: Object = null) {
@@ -72,6 +69,22 @@ export class Logger extends EventEmitter {
     }
 
     return entry;
+  }
+
+  public configure(options: LoggerOptions) {
+    if (options.namespace) {
+      this.namespace = options.namespace;
+    }
+
+    if (options.transports) {
+      for (const i in options.transports) {
+        this.subscribe(options.transports[i]);
+      }
+    }
+
+    if (options.template) {
+      this.template = options.template;
+    }
   }
 
   public send(level: string, messageOrData: string | Object, data?: Object) {

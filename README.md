@@ -8,7 +8,7 @@ the included transports or creating your own, very easily. You can even decide h
 dependencies (if they are using this library, of course). A log doesn't have to be just a message, either. You can
 data to the log message or have a message generated for you from the data via templates.
 
-The biggest motivating factor to start this project was infact the demise of 
+The biggest motivating factor to start this project was infact the demise of
 [winston](https://github.com/winstonjs/winston), my go-to logging library. Unfortunetly, it is no longer maintained and
 is also too time-consuming to me to reboot it as-is. I also wanted to provide a logging library written with
 [TypeScript](http://typescriptlang.org), mostly due to the way type-checking is done in most modern IDEs and the ability
@@ -50,7 +50,7 @@ logger.info('This is a test message with data', {
     isTest: true
 });
 ```
-You read that right. You can send data with your message. As a matter of fact, you can just send data with your log and 
+You read that right. You can send data with your message. As a matter of fact, you can just send data with your log and
 have the ```Logger``` parse it into a message for you:
 ```javascript
 logger.template = '{method} {url} {status} {length} {ms}';
@@ -108,17 +108,17 @@ A log `entry` object looks like this:
 ```typescript
 interface Entry {
   namespace: string;
-  level: string,
-  message: string,
-  hostname: string,
-  createdAt: Date,
+  level: string;
+  message: string;
+  createdAt: Date;
+  hostname: string;
   data?: Object;
 }
 ```
 
 ## Typescript
-This library is developed with [TypeScript](http://www.typescriptlang.org/), and as such, includes definitions. 
-However, you do not even need to know what TypeScript is to use this package. The compiled project is included in the 
+This library is developed with [TypeScript](http://www.typescriptlang.org/), and as such, includes definitions.
+However, you do not even need to know what TypeScript is to use this package. The compiled project is included in the
 [npm package](http://npmjs.com/package/nomatic-logging).
 
 ## Testing
@@ -135,21 +135,22 @@ If you need help with writing tests, ping me and I will either write them for yo
 guidance on how to do so.
 
 ## Future Plans
-* Make usable in both Node.js and the browser
-* Add more default transports, including:
+* Make usable in both Node.js and the browser (currently only supported in Node.js)
+* Add more transports (either included in the main project or as plugins), including:
   - HTTP (sending log entries via JSON or text to a remote server)
   - File (with log-rotate capabilities)
+  - Node.js streams
 * Improve test cases, remove clutter, etc. to build even more confidence in the project
 
 ## Contributing / Support
 Please note that this software is in the early stages of development, but is in production use in several of my
 personal projects and university/work endeavors.
 
-Pull requests are absolutely welcome, and issues can be raised for questions or bugs. I do understand the documentation is a 
+Pull requests are absolutely welcome, and issues can be raised for questions or bugs. I do understand the documentation is a
 little sparse at the moment, and I'm certainly working to expand that very, very soon. If you need help using the
-library, submit an issue for it and I'll be sure to document it (first in the issue itself, then in the actual 
+library, submit an issue for it and I'll be sure to document it (first in the issue itself, then in the actual
 documentation).
 
-Please remember that this is something I maintain and build upon in my spare time. If you need paid support for a 
+Please remember that this is something I maintain and build upon in my spare time. If you need paid support for a
 particular solution, feature, or bug, please feel free to send me a message. Generally speaking, I'm very responsive
 during the work week.
