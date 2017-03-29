@@ -122,7 +122,7 @@ library or module:
 const Logger = logging.Logger;
 module.exports.logger = new Logger();
 ```
-The `Logger` class uses no transport(s) by default. You can specify one (or more) in the constructor or do:
+The `Logger` class uses no transport(s) by default. You can specify one (or more) when instantiating or do:
 ```javascript
 module.exports.logger.configure({
     transports: [
@@ -139,7 +139,21 @@ module.exports.logger.configure({
 This will override properties at a top-level basis (i.e. if you specify `transports`, any other transports specified
 will no longer be used by the logger).
 
-## Typescript
+Anything you can configure via `configure`, you can pass on instantiation:
+```javascript
+const myLogger = new Logger({
+    transports: [
+        logging.transport.console(),
+        logging.transport.create({
+            level: 'debug',
+            handle(entry) {
+                // do something with log entry
+            }
+        })
+    ]
+});
+```
+## TypeScript
 This library is developed with [TypeScript](http://www.typescriptlang.org/), and as such, includes definitions.
 However, you do not even need to know what TypeScript is to use this package. The compiled project is included in the
 [npm package](http://npmjs.com/package/nomatic-logging).
