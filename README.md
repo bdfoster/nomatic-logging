@@ -1,10 +1,12 @@
 # nomatic-logging
 [![Build Status](https://travis-ci.org/bdfoster/nomatic-logging.svg?branch=master)](https://travis-ci.org/bdfoster/nomatic-logging) [![Coverage Status](https://coveralls.io/repos/github/bdfoster/nomatic-logging/badge.svg?branch=master)](https://coveralls.io/github/bdfoster/nomatic-logging?branch=master)
 
-Get serious about logging. This library takes the best concepts of
-[winston](https://github.com/winstonjs/winston) and
-[bunyan](https://github.com/trentm/node-bunyan) but diverges to create
-an extremely flexible yet elegant logging solution.
+**Get serious about logging.** This library takes the best concepts of
+[winston](https://github.com/winstonjs/winston) and [bunyan](https://github.com/trentm/node-bunyan) to create a flexible
+yet elegant logging solution for any Node.js library or application. You decide what to do with generated logs by using
+the included transports or creating your own, very easily. You can even decide how to manage logs from your project's
+dependencies (if they are using this library, of course). A log doesn't have to be just a message, either. You can
+data to the log message or have a message generated for you from the data via templates.
 
 ## Installation
 
