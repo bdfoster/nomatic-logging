@@ -15,22 +15,22 @@ the included transports or creating your own, very easily. You can even decide h
 dependencies (if they are using this library, of course). A log doesn't have to be just a message, either. You can
 data to the log message or have a message generated for you from the data via templates.
 
-The biggest motivating factor to start this project was infact the demise of
-[winston](https://github.com/winstonjs/winston), my go-to logging library. Unfortunetly, it is no longer maintained and
-is also too time-consuming to me to reboot it as-is. I also wanted to provide a logging library written with
-[TypeScript](http://typescriptlang.org), mostly due to the way type-checking is done in most modern IDEs and the ability
-to reduce testing overhead. [bunyan](https://github.com/trentm/node-bunyan) looks great, however it's just too
-complicated for most of my use-cases.
+## Goals
+* **Reliable**: It should fail predictably, and with valid cause. Log data is sensitive and important to determining the
+status of the dependent application. This is done with extensive unit and integration testing along with proper
+semantic versioning.
+* **Flexible**: Each dependent package will use this in a different way. Design it in a way that will fit most use 
+cases.
+* **Elegant**: It should be easy to get started, yet support complex use cases when needed.
+* **Fast**: Logging is boring, but essential. Do what we need to do, quickly, and get out of the way.
 
 ## Installation
-
 You can install from [npm](https://www.npmjs.com/package/nomatic-logging) by doing:
 ```bash
 npm install --save nomatic-logging
 ```
 
 ## Basic Usage
-
 To create a ```Logger``` (or get an existing Logger instance):
 ```javascript
 const logger = require('nomatic-logging')('my.namespace');
