@@ -1,7 +1,7 @@
 import 'mocha';
 import {expect} from 'chai';
 import {Logger} from '../../src/';
-import {levels} from '../../src';
+import * as logger from '../../src';
 import {Transport} from '../../src';
 import {EventEmitter} from 'nomatic-events';
 
@@ -9,7 +9,9 @@ describe('Logger', () => {
   let instance;
 
   beforeEach(() => {
-    instance = new Logger({namespace: 'test'});
+    instance = new Logger({
+      namespace: 'test'
+    });
   });
 
   describe('#constructor()', () => {
@@ -217,12 +219,12 @@ describe('Logger', () => {
       const triggeredLevels = [];
       instance.template = '{string0} {string1}';
       instance.level = 'debug';
-      for (const level of Object.keys(levels)) {
+      for (const level of Object.keys(instance.levels)) {
         instance.on(level, (entry) => {
           triggeredLevels.push(level);
           expect(entry.message).to.equal('Test message');
 
-          for (const lvl of Object.keys(levels)) {
+          for (const lvl of Object.keys(instance.levels)) {
             if (triggeredLevels.indexOf(lvl) === -1) {
               return;
             }
@@ -232,6 +234,39 @@ describe('Logger', () => {
         });
         instance[level]('Test message');
       }
+    });
+  });
+
+  describe('#levels', () => {
+    it('should set levels and methods associated with each', () => {
+      instance.levels = {
+        info: 3,
+        warn: 2,
+        error: 1
+      };
+
+      expect(instance.debug).to.not.exist;
+      expect(instance.trace).to.not.exist;
+      expect(instance.info).to.exist;
+      expect(instance.warn).to.exist;
+      expect(instance.error).to.exist;
+    });
+  });
+
+  describe('#configure()', () => {
+
+    it('should configure transports', () => {
+      const listenerCount = instance.listeners.length;
+      instance.configure({
+        transports: [logger.transport.create({
+          level: 'info',
+          handle(entry) {
+            expect(entry).to.exist;
+            return;
+          }
+        })]
+      });
+      expect(instance.listeners.length).to.equal(listenerCount + 1);
     });
   });
 });

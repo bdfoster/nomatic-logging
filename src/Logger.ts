@@ -16,34 +16,55 @@ export interface Levels {
   [key: string]: number;
 }
 
-export const levels: Levels = {
-  trace: 50,
-  debug: 40,
-  info: 30,
-  warn: 20,
-  error: 10
-};
-
 export interface LoggerOptions {
   namespace?: string;
   level?: string;
   template?: string;
   transports?: Transport[];
+  levels?: Levels;
 }
 
 export class Logger extends EventEmitter {
-  protected transports: Transport[] = [];
+  private _levels: Levels = {
+    trace: 50,
+    debug: 40,
+    info: 30,
+    warn: 20,
+    error: 10
+  };
   private _namespace: string = null;
+  protected transports: Transport[] = [];
+
   public template: string = null;
+
 
   constructor(options: LoggerOptions = {}) {
     super();
-    this.configure(options);
 
-    for (const level in levels) {
-      this[level] = (messageOrData: string | Object, data?: Object) => {
-        return this.send(level, messageOrData, data);
-      };
+    if (!options.levels) {
+      options.levels = this.levels;
+    }
+
+    this.configure(options);
+  }
+
+  public get levels() {
+    return this._levels;
+  }
+
+  public set levels(value: Levels) {
+    for (const level in this._levels) {
+      if (!value.hasOwnProperty(level) && this[level]) {
+        delete this[level];
+      }
+    }
+
+    for (const level in value) {
+      if (!this[level]) {
+        this[level] = (messageOrData: string | Object, data?: Object) => {
+          return this.send(level, messageOrData, data);
+        }
+      }
     }
   }
 
@@ -85,11 +106,15 @@ export class Logger extends EventEmitter {
     if (options.template) {
       this.template = options.template;
     }
+
+    if(options.levels) {
+      this.levels = options.levels;
+    }
   }
 
   public send(level: string, messageOrData: string | Object, data?: Object) {
     let message: string;
-    if (!levels.hasOwnProperty(level)) {
+    if (!this.levels.hasOwnProperty(level)) {
       throw new Error('Invalid level: ' + level);
     }
 
@@ -117,7 +142,7 @@ export class Logger extends EventEmitter {
     this.transports.push(transport);
 
     this.on('entry', (entry) => {
-      transport.push(entry);
+      transport.push(entry, this);
     })
   }
 }

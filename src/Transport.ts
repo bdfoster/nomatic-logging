@@ -1,4 +1,4 @@
-import {Entry, levels} from './';
+import {Entry, Logger} from './';
 
 export type TransportHandler = (entry: Entry) => void;
 
@@ -9,8 +9,8 @@ export interface TransportOptions {
 }
 
 export class Transport {
-  private _level: string;
   private _handler: (entry: Entry) => void;
+  public level: string;
 
   constructor(options: TransportOptions) {
     this.level = options.level;
@@ -25,20 +25,11 @@ export class Transport {
     this._handler = value;
   }
 
-  public get level() {
-    return this._level;
-  }
-
-  public set level(value: string) {
-    if (!levels.hasOwnProperty(value)) {
-      throw new Error('Invalid level: ' + value);
+  public push(entry: Entry, logger: Logger) {
+    if (!logger.levels.hasOwnProperty(entry.level)) {
+      throw new Error('Invalid level: ' + entry.level);
     }
-
-    this._level = value;
-  }
-
-  public push(entry: Entry) {
-    if (levels[entry.level] <= levels[this.level]) {
+    if (logger.levels[entry.level] <= logger.levels[this.level]) {
       this.handler(entry);
     }
   }
