@@ -8,6 +8,7 @@
     "compile": "tsc",
     "test": "cross-env NODE_ENV=test nyc mocha",
     "coverage": "nyc report --reporter=html",
+    "codeclimate": "nyc report --reporter=text-lcov | codeclimate-test-reporter",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -31,7 +32,6 @@
     "@types/chai": "^3.4.35",
     "@types/mocha": "^2.2.40",
     "chai": "^3.5.0",
-    "coveralls": "^2.12.0",
     "cross-env": "^3.2.4",
     "mocha": "^3.2.0",
     "nyc": "^10.1.2",
