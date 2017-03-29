@@ -107,7 +107,7 @@ logging('my.other.namespace').subscribe(myTransport);
 A log `entry` object looks like this:
 ```typescript
 interface Entry {
-  namespace: string;
+  namespace?: string;
   level: string;
   message: string;
   createdAt: Date;
@@ -115,6 +115,29 @@ interface Entry {
   data?: Object;
 }
 ```
+As you can see, the only two properties that are optional are `namespace` and `data`. `namespace` is optional because
+it is optional in the `Logger` class. You can use the `Logger` class directly, and potentially export it as part of your
+library or module:
+```javascript
+const Logger = logging.Logger;
+module.exports.logger = new Logger();
+```
+The `Logger` class uses no transport(s) by default. You can specify one (or more) in the constructor or do:
+```javascript
+module.exports.logger.configure({
+    transports: [
+        logging.transport.console(),
+        logging.transport.create({
+            level: 'debug',
+            handle(entry) {
+                // do something with the log entry
+            }
+        })
+    ] 
+});
+```
+This will override properties at a top-level basis (i.e. if you specify `transports`, any other transports specified
+will no longer be used by the logger).
 
 ## Typescript
 This library is developed with [TypeScript](http://www.typescriptlang.org/), and as such, includes definitions.

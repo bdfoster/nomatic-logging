@@ -2,9 +2,9 @@ import 'mocha';
 import {expect} from 'chai';
 import {create} from '../../../src/transport/console';
 
-describe('console', () => {
+describe('transport.console', () => {
   describe('#create()', () => {
-    it('should create an instance of Transport', () => {
+    it('should create a console transport', () => {
       expect(create({
         level: 'info'
       })).to.have.keys([
@@ -13,7 +13,7 @@ describe('console', () => {
       ]);
     });
 
-    it('should create an instance of Transport with given `template`', () => {
+    it('should create a console transport with given `template`', () => {
       expect(create({level: 'info', template: '{message}'}).push({
         namespace: 'test',
         hostname: 'test',
