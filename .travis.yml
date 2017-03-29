@@ -20,7 +20,7 @@ script:
 after_success:
   - npm install -g codeclimate-test-reporter coveralls
   - nyc report --reporter=text-lcov | codeclimate-test-reporter
-  - nyc report --reporter=test-lcov | coveralls
+  - nyc report --reporter=text-lcov | coveralls
 before_deploy:
   - npm run compile
 deploy:
