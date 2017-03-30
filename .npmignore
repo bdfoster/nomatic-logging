@@ -7,3 +7,4 @@ coverage/
 tsconfig.json
 examples/
 .nyc_output/
+docs/
