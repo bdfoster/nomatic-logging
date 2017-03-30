@@ -1,38 +1,22 @@
-import {Entry, Logger} from './';
+import {Entry} from './';
+import {EventEmitter} from 'nomatic-events';
 
 export type TransportHandler = (entry: Entry) => void;
 
 export interface TransportOptions {
-  level: string;
-  handler: TransportHandler;
+  level?: string;
   [key: string]: any;
 }
 
-export class Transport {
-  private _handler: (entry: Entry) => void;
+export abstract class Transport extends EventEmitter {
   public level: string;
 
   constructor(options: TransportOptions) {
+    super();
     this.level = options.level;
-    this.handler = options.handler;
   }
 
-  public get handler(): TransportHandler {
-    return this._handler;
-  }
-
-  public set handler(value: TransportHandler) {
-    this._handler = value;
-  }
-
-  public push(entry: Entry, logger: Logger) {
-    if (!logger.levels.hasOwnProperty(entry.level)) {
-      throw new Error('Invalid level: ' + entry.level);
-    }
-    if (logger.levels[entry.level] <= logger.levels[this.level]) {
-      this.handler(entry);
-    }
-  }
+  public abstract execute(entry: Entry);
 }
 
 export default Transport;

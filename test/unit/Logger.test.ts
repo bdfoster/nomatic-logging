@@ -1,36 +1,124 @@
 import 'mocha';
 import {expect} from 'chai';
-import {Logger} from '../../src/';
-import * as logger from '../../src';
-import {Transport} from '../../src';
-import {EventEmitter} from 'nomatic-events';
+import {Logger} from '../../src/Logger';
+import TestTransport from '../fixtures/TestTransport';
 
 describe('Logger', () => {
   let instance;
+  let child;
 
   beforeEach(() => {
-    instance = new Logger({
-      namespace: 'test'
-    });
+    instance = new Logger();
+    child = instance.create('test');
+
   });
 
   describe('#constructor()', () => {
-    it('should initialize a new instance', () => {
-      expect(new Logger()).to.exist;
-    });
-
-    it('should initialize a new instance with specified `namespace`', () => {
+    it('should instantiate', () => {
       expect(instance).to.exist;
-      expect(instance.namespace).to.equal('test');
+      expect(instance.name).to.equal('root');
+    });
+    it('should instantiate with `name`', () => {
+      instance = new Logger('test');
+      expect(instance).to.exist;
+      expect(instance.name).to.equal('test');
     });
 
-    it('should create a new instance with specified `namespace` and `template`', () => {
-      instance = new Logger({
-        namespace: 'test',
-        template: '{string[0]} {string[1]} {string[2]}',
+    it('should instantiate with `name` and `options.levels`', () => {
+      instance = new Logger('test', {
+        levels: {
+          error: 0,
+          info: 1,
+          debug: 2
+        }
       });
+      expect(instance).to.exist;
+      expect(instance.levels).to.have.keys([
+        'error',
+        'info',
+        'debug'
+      ]);
+    });
+  });
 
-      expect(instance.template).to.exist;
+  describe('#levels', () => {
+    it('should set levels and methods associated with each', () => {
+      expect(instance.debug).to.exist;
+      expect(instance.trace).to.exist;
+      expect(instance.info).to.exist;
+      expect(instance.warn).to.exist;
+      expect(instance.error).to.exist;
+
+      instance.levels = {
+        info: 3,
+        warn: 2,
+        error: 1
+      };
+
+      expect(instance.debug).to.not.exist;
+      expect(instance.trace).to.not.exist;
+      expect(instance.info).to.exist;
+      expect(instance.warn).to.exist;
+      expect(instance.error).to.exist;
+
+      expect(instance.levels).to.have.keys([
+        'info',
+        'warn',
+        'error'
+      ]);
+    });
+  });
+
+  describe('#configure()', () => {
+    it('should configure `transports`', () => {
+      instance.configure({
+        transports: [
+          new TestTransport({
+            level: 'info'
+          })
+        ]
+      });
+      expect(instance.transports.length).to.equal(1);
+      expect(instance.children[0].transports.length).to.equal(1);
+    });
+
+    it('should configure `template`', () => {
+      const template = '[{level}] [{date}] {message}';
+      instance.configure({
+        template: template
+      });
+      expect(instance.template).to.equal(template);
+    })
+  });
+
+  describe('#create()', () => {
+    it('should create a new child given `options`', () => {
+      const anotherChild = instance.create('test2', {
+        transports: [
+          new TestTransport({
+            level: 'error'
+          })
+        ],
+        levels: {
+          error: 0
+        }
+      });
+      expect(instance.children.length).to.equal(2);
+      expect(instance.get('test2')).to.equal(anotherChild);
+      expect(instance.transports).to.not.equal(instance.find('test2').transports);
+      expect(instance.find('test2').levels).to.have.keys([
+        'error'
+      ]);
+    });
+  });
+
+  describe('#get()', () => {
+    it('should return the pre-existing child', () => {
+      expect(instance.get('test')).to.equal(instance.children[0]);
+    });
+
+    it('should return a new child', () => {
+      expect(instance.get('test2')).to.equal(instance.children[1]);
     });
   });
 
@@ -38,58 +126,23 @@ describe('Logger', () => {
     it('should serialize with specified `level` and `message`', () => {
       const entry = instance.serialize('debug', 'Test message');
       expect(entry).to.have.keys([
-        'namespace',
+        'date',
+        'level',
         'message',
-        'hostname',
-        'createdAt',
-        'level'
+        'name'
       ]);
     });
   });
 
-  describe('#send()', () => {
-    it('should emit the entry while specifying `message`', (done) => {
-      let emitted = false;
-
-      instance.once('info', (entry) => {
-        expect(entry).to.have.keys([
-          'namespace',
-          'message',
-          'hostname',
-          'createdAt',
-          'level'
-        ]);
-        emitted = true;
-      });
-      instance.send('info', 'Test message');
-
-      setTimeout(() => {
-        if (!emitted) {
-          return done(new Error('Did not emit!'));
-        } else {
-          return done();
-        }
-      }, 10);
-    });
-
+  describe('#log()', () => {
     it('should emit the entry while specifying `message` and `data`', (done) => {
       let emitted = false;
       instance.once('info', (entry) => {
-        expect(entry).to.have.keys([
-          'namespace',
-          'message',
-          'hostname',
-          'createdAt',
-          'level',
-          'data'
-        ]);
-        expect(entry.data).to.have.keys([
-          'bool'
-        ]);
+        expect(entry.data).to.exist;
         expect(entry.data.bool).to.equal(true);
         emitted = true;
       });
-      instance.send('info', 'Test message', { bool: true });
+      instance.log('info', 'Test message', {bool: true});
 
       setTimeout(() => {
         if (!emitted) {
@@ -100,18 +153,38 @@ describe('Logger', () => {
       }, 10);
     });
 
-    it('should emit the entry while specifying `data` using instance `template` to generate `message`', (done) => {
+    it('should throw if no `template`', (done) => {
+      try {
+        instance.log('info', {
+          string0: 'Test'
+        });
+        return done(new Error('Did not throw!'));
+      } catch (error) {
+        if (error.message === '`message` is not specified and `template` is not defined') {
+          return done();
+        }
+        return done(error);
+      }
+    });
+
+    it('should throw on an invalid `level`', (done) => {
+      try {
+        instance.log('invalid', 'This should not fire!');
+        return done(new Error('Did not throw!'));
+      } catch (error) {
+        if (error.message === 'Invalid level: invalid') {
+          return done();
+        }
+        return done(error);
+      }
+    });
+
+    it('should execute transport on it\'s minimum log level while specifying `template` and no `message`', (done) => {
       let emitted = false;
+      const transport = new TestTransport({level: 'info'});
       instance.template = '{string0} {string1} {string2}';
-      instance.once('info', (entry) => {
-        expect(entry).to.have.keys([
-          'namespace',
-          'message',
-          'hostname',
-          'createdAt',
-          'level',
-          'data'
-        ]);
+      instance.use(transport);
+      transport.on('execute', (entry) => {
         expect(entry.data).to.have.keys([
           'string0',
           'string1',
@@ -122,7 +195,8 @@ describe('Logger', () => {
         expect(entry.data.bool).to.equal(true);
         emitted = true;
       });
-      instance.send('info', {
+
+      instance.log('info', {
         bool: true,
         string0: 'Test',
         string1: 'message',
@@ -138,75 +212,70 @@ describe('Logger', () => {
       }, 10);
     });
 
-    it('should throw if no `template`', (done) => {
-      try {
-        instance.send('info', {
-          string0: 'Test'
-        });
-        return done(new Error('Did not throw!'));
-      } catch (error) {
-        if (error.message === '`message` is not specified and `template` is not defined') {
-          return done();
-        }
-        return done(error);
-      }
-    });
-
-    it('should throw on an invalid `level`', (done) => {
-      try {
-        instance.send('invalid', 'This should not fire!');
-        return done(new Error('Did not throw'));
-      } catch(error) {
-        if (error.message === 'Invalid level: invalid') {
-          return done();
-        }
-        return done(error);
-      }
-    });
-  });
-
-  describe('#subscribe()', () => {
-    let emitter: EventEmitter;
-    let transport: Transport;
-    beforeEach(() => {
-      emitter = new EventEmitter();
-      transport = new Transport({
-        level: 'info',
-        handler(entry) {
-          emitter.emit(entry.level, entry);
-        }
-      });
-    });
-
-
-    it('should subscribe a Transport instance to the Logger instance', (done) => {
+    it('should not execute transport below it\'s level while specifying `message`', (done) => {
+      const transport = new TestTransport({level: 'info'});
       let emitted = false;
-      instance.subscribe(transport);
-
-      emitter.on('info', () => {
+      instance.use(transport);
+      transport.once('execute', () => {
         emitted = true;
       });
-
-      instance.send('info', 'Test message');
+      instance.debug('Test message');
 
       setTimeout(() => {
-        if (!emitted) {
-          return done(new Error('Did not emit!'));
+        if (emitted) {
+          return done(new Error('Did emit!'));
         } else {
           return done();
         }
       }, 10);
     });
+  });
 
+  describe('#register()', () => {
+    it('should return false when logger is already registered', () => {
+      expect(instance.register(instance.get('test'))).to.equal(false);
+    });
 
-
-    it('should throw when attempting to subscribe an already subscribed transport', (done) => {
-      instance.subscribe(transport);
+    it('should throw if child exists with same name', (done) => {
       try {
-        instance.subscribe(transport);
+        instance.register(new Logger('test'));
         return done(new Error('Did not throw!'));
-      } catch(error) {
-        if (error.message.startsWith('Transport already subscribed to')) {
+      } catch (error) {
+        if (error.message = 'Child already exists with name "test"') {
+          return done();
+        }
+        return done(error);
+      }
+    })
+  });
+
+  describe('#use()', () => {
+    let transport: TestTransport;
+    before(() => {
+      transport = new TestTransport({level: 'info'});
+    });
+
+    it('should add a new transport', () => {
+      expect(instance.transports.length).to.equal(0);
+      instance.use(transport);
+      expect(instance.transports.length).to.equal(1);
+    });
+
+    it('should not re-add a pre-existing transport', () => {
+      expect(instance.transports.length).to.equal(0);
+      instance.use(transport);
+      expect(instance.transports.length).to.equal(1);
+      instance.use(transport);
+      expect(instance.transports.length).to.equal(1);
+    });
+
+    it('should throw on invalid transport log level', (done) => {
+      const transport = new TestTransport({level: 'invalid'});
+      try {
+        instance.use(transport);
+        return done(new Error('Did not throw!'));
+      } catch (error) {
+        if (error.message === 'Transport specifies invalid `level`: invalid') {
           return done();
         }
         return done(error);
@@ -214,59 +283,30 @@ describe('Logger', () => {
     });
   });
 
-  describe("#{level}()", () => {
-    it('should call #send() when specifying `message`', (done) => {
-      const triggeredLevels = [];
-      instance.template = '{string0} {string1}';
-      instance.level = 'debug';
-      for (const level of Object.keys(instance.levels)) {
-        instance.on(level, (entry) => {
-          triggeredLevels.push(level);
-          expect(entry.message).to.equal('Test message');
+  describe('#{level}()', () => {
+    it('should execute a on corresponding log level', (done) => {
+      const triggered = [];
+      for (const level in instance.levels) {
+        instance.once(level, (entry) => {
+          expect(entry).to.exist;
+          expect(entry.level).to.equal(level);
 
-          for (const lvl of Object.keys(instance.levels)) {
-            if (triggeredLevels.indexOf(lvl) === -1) {
+          if (triggered.indexOf(level) !== -1) {
+            return done(new Error(level + ' triggered twice'));
+          }
+
+          triggered.push(level);
+
+          for (const lvl in instance.levels) {
+            if (triggered.indexOf(lvl) === -1) {
               return;
             }
           }
-
-          done();
+          return done();
         });
-        instance[level]('Test message');
+
+        instance[level]('test message');
       }
-    });
-  });
-
-  describe('#levels', () => {
-    it('should set levels and methods associated with each', () => {
-      instance.levels = {
-        info: 3,
-        warn: 2,
-        error: 1
-      };
-
-      expect(instance.debug).to.not.exist;
-      expect(instance.trace).to.not.exist;
-      expect(instance.info).to.exist;
-      expect(instance.warn).to.exist;
-      expect(instance.error).to.exist;
-    });
-  });
-
-  describe('#configure()', () => {
-
-    it('should configure transports', () => {
-      const listenerCount = instance.listeners.length;
-      instance.configure({
-        transports: [logger.transport.create({
-          level: 'info',
-          handle(entry) {
-            expect(entry).to.exist;
-            return;
-          }
-        })]
-      });
-      expect(instance.listeners.length).to.equal(listenerCount + 1);
     });
   });
 });

@@ -1,23 +1,14 @@
-import * as os from 'os';
 import {EventEmitter} from 'nomatic-events';
 import Transport from './Transport';
 import * as format from 'string-format';
+import {Entry} from './index';
 
-export interface Entry {
-  namespace?: string;
-  level: string;
-  message: string;
-  createdAt: Date;
-  hostname: string;
-  data?: Object;
-}
 
 export interface Levels {
   [key: string]: number;
 }
 
 export interface LoggerOptions {
-  namespace?: string;
   level?: string;
   template?: string;
   transports?: Transport[];
@@ -32,14 +23,17 @@ export class Logger extends EventEmitter {
     warn: 20,
     error: 10
   };
-  private _namespace: string = null;
-  protected transports: Transport[] = [];
 
+  protected transports: Transport[] = [];
+  protected children: Logger[] = [];
+
+  public readonly name: string;
   public template: string = null;
 
-
-  constructor(options: LoggerOptions = {}) {
+  constructor(name: string = 'root', options: LoggerOptions = {}) {
     super();
+
+    this.name = name;
 
     if (!options.levels) {
       options.levels = this.levels;
@@ -52,37 +46,34 @@ export class Logger extends EventEmitter {
     return this._levels;
   }
 
-  public set levels(value: Levels) {
+  public set levels(levels: Levels) {
     for (const level in this._levels) {
-      if (!value.hasOwnProperty(level) && this[level]) {
+      if (!levels.hasOwnProperty(level) && this[level]) {
         delete this[level];
       }
     }
 
-    for (const level in value) {
+    for (const level in levels) {
       if (!this[level]) {
         this[level] = (messageOrData: string | Object, data?: Object) => {
-          return this.send(level, messageOrData, data);
+          return this.log(level, messageOrData, data);
         }
       }
     }
-  }
 
-  public get namespace() {
-    return this._namespace;
-  }
+    this._levels = levels;
 
-  public set namespace(value: string) {
-    this._namespace = value;
+    for (const child of this.children) {
+      child.levels = levels;
+    }
   }
 
   private serialize(level: string, message: string, data: Object = null) {
     const entry: Entry = {
-      namespace: this.namespace,
+      name: this.name,
       message: message,
       level: level,
-      hostname: os.hostname(),
-      createdAt: new Date()
+      date: new Date()
     };
 
     if (data) {
@@ -93,13 +84,10 @@ export class Logger extends EventEmitter {
   }
 
   public configure(options: LoggerOptions) {
-    if (options.namespace) {
-      this.namespace = options.namespace;
-    }
-
     if (options.transports) {
+      this.transports = [];
       for (const i in options.transports) {
-        this.subscribe(options.transports[i]);
+        this.use(options.transports[i]);
       }
     }
 
@@ -110,9 +98,37 @@ export class Logger extends EventEmitter {
     if(options.levels) {
       this.levels = options.levels;
     }
+
+    for (const child of this.children) {
+      child.configure(options);
+    }
   }
 
-  public send(level: string, messageOrData: string | Object, data?: Object) {
+  public create(name: string, options: LoggerOptions = {}) {
+    if (!options.transports) {
+      options.transports = this.transports;
+    }
+
+    if (!options.levels) {
+      options.levels = this.levels;
+    }
+
+    const logger = new Logger(name, options);
+    this.register(logger);
+    return logger;
+  }
+
+  public find(name: string) {
+    for (const i in this.children) {
+      if (this.children[i].name === name) {
+        return this.children[i];
+      }
+    }
+
+    return null;
+  }
+
+  public log(level: string, messageOrData: string | Object, data?: Object) {
     let message: string;
     if (!this.levels.hasOwnProperty(level)) {
       throw new Error('Invalid level: ' + level);
@@ -130,20 +146,53 @@ export class Logger extends EventEmitter {
     }
 
     const entry = this.serialize(level, message, data);
-    this.emit('entry', entry);
     this.emit(level, entry);
+    this.emit('entry', entry);
+
+    for (const transport of this.transports) {
+      if (this.levels[entry.level] <= this.levels[transport.level]) {
+        transport.execute(entry);
+      }
+    }
   }
 
-  public subscribe(transport: Transport) {
+  public get(name: string) {
+    let result = this.find(name);
+
+    if (!result) {
+      return this.create(name);
+    }
+
+    return result;
+  }
+
+  public register(logger: Logger) {
+    if (this.children.indexOf(logger) === -1) {
+      for (const child of this.children) {
+        if (child.name === logger.name) {
+          throw new Error('Child already exists with name "' + logger.name + '"');
+        }
+      }
+      this.children.push(logger);
+      return true;
+    }
+    return false;
+  }
+
+  public use(transport: Transport) {
     if (this.transports.indexOf(transport) !== -1) {
-      throw new Error('Transport already subscribed to "' + this.namespace + '" namespace');
+      return;
+    }
+
+    if (transport.level && !this.levels[transport.level]) {
+      throw new Error('Transport specifies invalid `level`: ' + transport.level);
     }
 
     this.transports.push(transport);
 
-    this.on('entry', (entry) => {
-      transport.push(entry, this);
-    })
+    for (const child of this.children) {
+      child.use(transport);
+    }
   }
 }
 

@@ -31,29 +31,29 @@ npm install --save nomatic-logging
 ```
 
 ## Basic Usage
-To create a ```Logger``` (or get an existing Logger instance):
+To get the default ```Logger```:
 ```javascript
-const logger = require('nomatic-logging')('my.namespace');
+const logger = require('nomatic-logging');
 ```
 ...which is equivalent to (if the namespace is not already taken):
 ```javascript
-const logging = require('nomatic-logging');
-const logger = logging.create({
-    namespace: 'my.namespace',
+const Logger = require('nomatic-logging').Logger;
+const transport = require('nomatic-logging').transport;
+const logger = new Logger('root', {
     transports: [
-        logging.transport.console({
+        new transport.Console({
             level: 'info'
         })
     ]
 });
 ```
-Now, ```logger``` has a namespace of ```my.namespace``` and a way to send logs of level ```info``` and above to the console.
+Now, ```logger``` has a name of ```root``` and a way to send logs of level ```info``` and above to the console.
 
 Then, to use it:
 ```javascript
-logger.info('This is a test message');
+logger.info('test');
 // with data:
-logger.info('This is a test message with data', {
+logger.info('test', {
     isTest: true
 });
 ```
@@ -70,7 +70,7 @@ logger.info({
 });
 ```
 
-To listen for all logging events on a namespace:
+To listen for all entries generated on `logger`:
 ```javascript
 logger.on('entry', (entry) => {
     /* `entry` is an object with `namespace`, `message`, `level`,
@@ -95,20 +95,23 @@ logger.on(/(info|debug)/, (entry) => {
 
 You can create your own transport very easily:
 ```javascript
-const myTransport = logging.transport({
-    level: 'info',
-    handle(entry) {
-        // do something with the log entry
+const Transport = require('nomatic-logging').Transport;
+class DatabaseTransport extends Transport {
+    public execute(entry) {
+        /// do something here
     }
+}
+
+const myTransport = new DatabaseTransport({
+    level: 'debug'
 });
 ```
 You can send log entries to a database, a file, a remote server, whatever you want. This is where `nomatic-logging`
 becomes very powerful, and not just a complicated replacement for `console.log()`.
 
-You can then subscribe `myTransport` to one logger, or many loggers:
+You can then subscribe `myTransport` to a logger:
 ```javascript
-logger.subscribe(myTransport);
-logging('my.other.namespace').subscribe(myTransport);
+logger.use(myTransport);
 ```
 
 A log `entry` object looks like this:
@@ -160,6 +163,20 @@ const myLogger = new Logger({
     ]
 });
 ```
+A logger can also have child loggers:
+```javascript
+logger.create('app');
+```
+...which have all the same levels and transports of the parent. If you try to `create` another logger with the same name
+on this parent, it will throw an exception. When you `configure` the parent, the parent does
+the same to all child loggers.
+
+Loggers also have a `get` method, which will either return a logger or create one if it does not exist:
+```javascript
+logger.get('app') // returns the previously created Logger instance of the same name
+logger.get('app2') // `create`s then returns a Logger instance with `name` of "app2"
+```
+
 ## TypeScript
 This library is developed with [TypeScript](http://www.typescriptlang.org/), and as such, includes definitions.
 However, you do not even need to know what TypeScript is to use this package. The compiled project is included in the
