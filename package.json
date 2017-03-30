@@ -10,7 +10,7 @@
     "coverage": "nyc report --reporter=html",
     "codeclimate": "nyc report --reporter=text-lcov | codeclimate-test-reporter",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "docs": "typedoc --out ./docs/ --module amd --name nomatic-logging --hideGenerator --mode file src"
+    "docs": "typedoc --out ./docs/ --module commonjs --name nomatic-logging --hideGenerator --mode file src"
   },
   "repository": {
     "type": "git",
