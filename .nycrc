@@ -12,7 +12,8 @@
     ".nyc_output",
     ".git",
     "test",
-    "dist"
+    "dist",
+    "docs"
   ],
   "extension": [
     ".ts",
