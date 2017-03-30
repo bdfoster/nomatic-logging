@@ -12,7 +12,7 @@ export class Console extends Transport {
   constructor(options: ConsoleOptions) {
     super(options);
 
-    this.template = options.template || '[{level.name}]\t{message}';
+    this.template = options.template || '[{level}]\t{message}';
   }
 
   execute(entry: Entry) {

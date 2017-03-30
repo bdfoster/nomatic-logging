@@ -41,9 +41,7 @@ const Logger = require('nomatic-logging').Logger;
 const transport = require('nomatic-logging').transport;
 const logger = new Logger('root', {
     transports: [
-        new transport.Console({
-            level: 'info'
-        })
+        transport.console // same as calling: new transport.Console({level: 'info'})
     ]
 });
 ```
@@ -136,13 +134,8 @@ The `Logger` class uses no transport(s) by default. You can specify one (or more
 ```javascript
 module.exports.logger.configure({
     transports: [
-        logging.transport.console(),
-        logging.transport.create({
-            level: 'debug',
-            handle(entry) {
-                // do something with the log entry
-            }
-        })
+        logging.transport.console,
+        myTransport,
     ] 
 });
 ```
@@ -153,13 +146,8 @@ Anything you can configure via `configure`, you can pass on instantiation:
 ```javascript
 const myLogger = new Logger({
     transports: [
-        logging.transport.console(),
-        logging.transport.create({
-            level: 'debug',
-            handle(entry) {
-                // do something with log entry
-            }
-        })
+        logging.transport.console,
+        myTransport,
     ]
 });
 ```
@@ -167,14 +155,14 @@ A logger can also have child loggers:
 ```javascript
 logger.create('app');
 ```
-...which have all the same levels and transports of the parent. If you try to `create` another logger with the same name
-on this parent, it will throw an exception. When you `configure` the parent, the parent does
-the same to all child loggers.
+...which have all the same levels and transports of the parent. If you try to create another logger with the same name
+on this parent, it will throw an exception. When you configure the parent, the parent will push the same configuration
+all child loggers.
 
 Loggers also have a `get` method, which will either return a logger or create one if it does not exist:
 ```javascript
-logger.get('app') // returns the previously created Logger instance of the same name
-logger.get('app2') // `create`s then returns a Logger instance with `name` of "app2"
+logger.get('app'); // returns the previously created Logger instance of the same name
+logger.get('app2'); // creates then returns a Logger instance with `name` of 'app2'
 ```
 
 ## TypeScript

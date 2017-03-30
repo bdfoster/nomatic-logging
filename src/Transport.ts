@@ -11,9 +11,9 @@ export interface TransportOptions {
 export abstract class Transport extends EventEmitter {
   public level: string;
 
-  constructor(options: TransportOptions) {
+  constructor(options: TransportOptions = {}) {
     super();
-    this.level = options.level;
+    this.level = options.level || null;
   }
 
   public abstract execute(entry: Entry);

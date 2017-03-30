@@ -5,9 +5,7 @@ import TestTransport from '../fixtures/TestTransport';
 describe('Transport', () => {
   let instance: TestTransport;
   beforeEach(() => {
-    instance = new TestTransport({
-      level: 'info',
-    });
+    instance = new TestTransport();
   });
 
   describe('#constructor()', () => {

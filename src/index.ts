@@ -15,8 +15,6 @@ export interface Entry {
 
 export default new Logger(null, {
   transports: [
-    new transport.Console({
-      level: 'info'
-    })
+    transport.console
   ]
 });
