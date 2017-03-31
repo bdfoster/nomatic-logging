@@ -3,7 +3,6 @@
 [![npm](https://img.shields.io/npm/v/nomatic-logging.svg)](https://www.npmjs.com/package/nomatic-logging)
 [![Build status](https://img.shields.io/travis/bdfoster/nomatic-logging/master.svg)](https://travis-ci.org/bdfoster/nomatic-logging)
 [![Coverage Status](https://img.shields.io/coveralls/bdfoster/nomatic-logging/master.svg)](https://coveralls.io/github/bdfoster/nomatic-logging)
-[![Code Climate](https://img.shields.io/codeclimate/github/bdfoster/nomatic-logging/badges/gpa.svg)](https://codeclimate.com/github/bdfoster/nomatic-logging) 
 [![David dependencies](https://img.shields.io/david/bdfoster/nomatic-logging.svg)](https://david-dm.org/bdfoster/nomatic-logging)
 [![David devDependencies](https://img.shields.io/david/dev/bdfoster/nomatic-logging.svg)](https://david-dm.org/bdfoster/nomatic-logging?type=dev)
 [![License](https://img.shields.io/github/license/bdfoster/nomatic-logging.svg)](https://github.com/bdfoster/nomatic-logging/blob/master/LICENSE)
