@@ -146,16 +146,31 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L31">Logger.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L110">Logger.ts:110</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Representation of a logging subject.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> name: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;root&quot;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The name of the logging subject.</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/loggeroptions.html" class="tsd-signature-type">LoggerOptions</a><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Options to apply to instance.</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="logger.html" class="tsd-signature-type">Logger</a></h4>
@@ -171,9 +186,14 @@
 					<div class="tsd-signature tsd-kind-icon">children<span class="tsd-signature-symbol">:</span> <a href="logger.html" class="tsd-signature-type">Logger</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L28">Logger.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L77">Logger.ts:77</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Child <code>Logger</code> instances.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="listeners" class="tsd-anchor"></a>
@@ -203,9 +223,14 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L30">Logger.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L82">Logger.ts:82</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The name of a logging subject that the instance represents.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="template" class="tsd-anchor"></a>
@@ -213,9 +238,33 @@
 					<div class="tsd-signature tsd-kind-icon">template<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L31">Logger.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L110">Logger.ts:110</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The template to be used when parsing <code>Entry.data</code> for an <code>Entry.message</code>.
+							When a log message is not defined, the data associated with it can be used to create the message.</p>
+						</div>
+						<p>For example:</p>
+						<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> logger = <span class="hljs-built_in">require</span>(<span class="hljs-string">'nomatic-logging'</span>);
+logger.template = <span class="hljs-string">'{method} {url} ==&gt; {status} {length} bytes'</span>;
+logger.log(<span class="hljs-string">'info'</span>, {
+ <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,
+ <span class="hljs-attr">url</span>: <span class="hljs-string">'/api/v1/users?page=1'</span>,
+ <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+ <span class="hljs-attr">length</span>: <span class="hljs-number">1203</span>
+};
+</code></pre>
+						<p>The <code>Entry</code> (sent on <code>execute</code> of each associated transport) would include a <code>message</code> property set to
+						<code>GET /api/v1/users?page=1 ==&gt; 200 1203 bytes</code>.</p>
+						<p>When defining a template, variables from the log entry&#39;s data object are used. The name of the variable should
+							be contained within curly braces, i.e. &#39;{key}&#39; would be replaced with <code>value</code> if data has a property of <code>key</code> with
+						value of <code>value</code>.</p>
+						<p>By default, a template is not used, so a message must be specified when calling <code>log</code> (or a method associated with
+							a log level). If <code>template</code> is defined, a message is optional, and <code>template</code> will not be used if a message is
+						defined.</p>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 					<a name="transports" class="tsd-anchor"></a>
@@ -223,9 +272,19 @@
 					<div class="tsd-signature tsd-kind-icon">transports<span class="tsd-signature-symbol">:</span> <a href="transport.html" class="tsd-signature-type">Transport</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L27">Logger.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L73">Logger.ts:73</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p><code>Transport</code> instances which are triggered in the <code>log</code> method (or a method associated with a log level).</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>type</dt>
+							<dd><p>{Array}</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -241,21 +300,36 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L45">Logger.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L133">Logger.ts:133</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return the log levels available and their associated priority.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/levels.html" class="tsd-signature-type">Levels</a></h4>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L49">Logger.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L142">Logger.ts:142</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set the levels available for this instance. When levels are set, methods are created
+									for new levels, while levels not specified on assignment are deleted.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>levels: <a href="../interfaces/levels.html" class="tsd-signature-type">Levels</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -275,9 +349,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L86">Logger.ts:86</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L191">Logger.ts:191</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Configure the instance at or after instantiation. All child instances will
+									also be configured with the options specified.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -298,9 +378,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L107">Logger.ts:107</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L218">Logger.ts:218</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a child <code>Logger</code> instance.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -351,7 +436,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L121">Logger.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L232">Logger.ts:232</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -374,9 +459,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L159">Logger.ts:159</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L284">Logger.ts:284</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Find or create a child instance. If child instance has not already been created, <code>options</code> is inherited from this
+									instance.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -397,9 +488,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L131">Logger.ts:131</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L250">Logger.ts:250</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Parse, validate, and pass a log entry to all associated transports.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -531,9 +627,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L169">Logger.ts:169</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L299">Logger.ts:299</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Register a child instance.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -541,6 +642,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>: If <code>false</code>, child is already registered, else returns <code>true</code>.</p>
 						</li>
 					</ul>
 				</section>
@@ -554,19 +656,33 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L71">Logger.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L171">Logger.ts:171</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Prepares an object with all data associated with a log entry.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>level: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The log level associated with the Entry.</p>
+									</div>
 								</li>
 								<li>
 									<h5>message: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The message associated with the Entry.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> data: <span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol"> =&nbsp;null</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Optional data to associate with the Entry.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/entry.html" class="tsd-signature-type">Entry</a></h4>
@@ -583,13 +699,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L182">Logger.ts:182</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L316">Logger.ts:316</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Associate a transport to the instance. Transports are executed from <code>log</code> method.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>transport: <a href="transport.html" class="tsd-signature-type">Transport</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -605,7 +728,7 @@
 					<div class="tsd-signature tsd-kind-icon">_levels<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L19">Logger.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L61">Logger.ts:61</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -614,7 +737,7 @@
 						<div class="tsd-signature tsd-kind-icon">debug<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;40</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L21">Logger.ts:21</a></li>
+								<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L63">Logger.ts:63</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -624,7 +747,7 @@
 						<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;10</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L24">Logger.ts:24</a></li>
+								<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L66">Logger.ts:66</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -634,7 +757,7 @@
 						<div class="tsd-signature tsd-kind-icon">info<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;30</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L22">Logger.ts:22</a></li>
+								<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L64">Logger.ts:64</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -644,7 +767,7 @@
 						<div class="tsd-signature tsd-kind-icon">trace<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;50</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L20">Logger.ts:20</a></li>
+								<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L62">Logger.ts:62</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -654,7 +777,7 @@
 						<div class="tsd-signature tsd-kind-icon">warn<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;20</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L23">Logger.ts:23</a></li>
+								<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L65">Logger.ts:65</a></li>
 							</ul>
 						</aside>
 					</section>
