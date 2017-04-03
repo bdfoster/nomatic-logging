@@ -3,16 +3,58 @@ import Transport from './Transport';
 import * as format from 'string-format';
 import {Entry} from './index';
 
-
+/**
+ * A specification of log level names and their associated priority. A lower number is given higher priority.
+ * Example:
+ *  ```typescript
+ *  const levels: Levels = {
+ *    error: 0,
+ *    warn: 1,
+ *    info: 2,
+ *    debug: 3
+ *  };
+ *  ```
+ *
+ *  `info` has a higher priority than `debug`, but not as high as `warn`. A `Transport` with a level of `info` will
+ *  execute log entries on `info`, `warn`, and `error` levels, but not on `debug`.
+ */
 export interface Levels {
   [key: string]: number;
 }
 
+/**
+ * Options associated with a `Logger` instance. Each property is optional, and as such, have sensible defaults.
+ */
 export interface LoggerOptions {
-  level?: string;
+  /**
+   * When a log message is not defined, the data associated with it can be used to create the message.
+   * For example:
+   * ```javascript
+   * const logger = require('nomatic-logging');
+   * logger.template = '{method} {url} ==> {status} {length} bytes';
+   * logger.log('info', {
+   *  method: 'GET',
+   *  url: '/api/v1/users?page=1',
+   *  status: 200,
+   *  length: 1203
+   * };
+   * ```
+   * The `Entry` (sent on `execute` of each associated transport) would include a `message` property set to
+   * `GET /api/v1/users?page=1 ==> 200 1203 bytes`.
+   */
   template?: string;
+  /**
+   * Transports to associated with the `Logger` instance.
+   */
   transports?: Transport[];
+  /**
+   * Default:
+   * ```typescript
+   * { trace: 50, debug: 40, info: 30, warn: 20, error: 10 }
+   * ```
+   */
   levels?: Levels;
+
 }
 
 export class Logger extends EventEmitter {
@@ -24,12 +66,54 @@ export class Logger extends EventEmitter {
     error: 10
   };
 
+  /**
+   * `Transport` instances which are triggered in the `log` method (or a method associated with a log level).
+   * @type {Array}
+   */
   protected transports: Transport[] = [];
+  /**
+   * Child `Logger` instances.
+   */
   protected children: Logger[] = [];
 
+  /**
+   * The name of a logging subject that the instance represents.
+   */
   public readonly name: string;
+
+  /**
+   * The template to be used when parsing `Entry.data` for an `Entry.message`.
+   * When a log message is not defined, the data associated with it can be used to create the message.
+   *
+   * For example:
+   * ```javascript
+   * const logger = require('nomatic-logging');
+   * logger.template = '{method} {url} ==> {status} {length} bytes';
+   * logger.log('info', {
+   *  method: 'GET',
+   *  url: '/api/v1/users?page=1',
+   *  status: 200,
+   *  length: 1203
+   * };
+   * ```
+   * The `Entry` (sent on `execute` of each associated transport) would include a `message` property set to
+   * `GET /api/v1/users?page=1 ==> 200 1203 bytes`.
+   *
+   * When defining a template, variables from the log entry's data object are used. The name of the variable should
+   * be contained within curly braces, i.e. '{key}' would be replaced with `value` if data has a property of `key` with
+   * value of `value`.
+   *
+   * By default, a template is not used, so a message must be specified when calling `log` (or a method associated with
+   * a log level). If `template` is defined, a message is optional, and `template` will not be used if a message is
+   * defined.
+   */
   public template: string = null;
 
+  /**
+   * Representation of a logging subject.
+   * @param name        The name of the logging subject.
+   * @param options     Options to apply to instance.
+   */
   constructor(name: string = 'root', options: LoggerOptions = {}) {
     super();
 
@@ -42,10 +126,19 @@ export class Logger extends EventEmitter {
     this.configure(options);
   }
 
+  /**
+   * Return the log levels available and their associated priority.
+   * @returns {Levels}
+   */
   public get levels() {
     return this._levels;
   }
 
+  /**
+   * Set the levels available for this instance. When levels are set, methods are created
+   * for new levels, while levels not specified on assignment are deleted.
+   * @param levels
+   */
   public set levels(levels: Levels) {
     for (const level in this._levels) {
       if (!levels.hasOwnProperty(level) && this[level]) {
@@ -68,6 +161,13 @@ export class Logger extends EventEmitter {
     }
   }
 
+  /**
+   * Prepares an object with all data associated with a log entry.
+   * @param level     The log level associated with the Entry.
+   * @param message   The message associated with the Entry.
+   * @param data      Optional data to associate with the Entry.
+   * @returns {Entry}
+   */
   private serialize(level: string, message: string, data: Object = null) {
     const entry: Entry = {
       name: this.name,
@@ -83,6 +183,11 @@ export class Logger extends EventEmitter {
     return entry;
   }
 
+  /**
+   * Configure the instance at or after instantiation. All child instances will
+   * also be configured with the options specified.
+   * @param options: These options are the same as those accepted on instantiation.
+   */
   public configure(options: LoggerOptions) {
     if (options.transports) {
       this.transports = [];
@@ -104,6 +209,12 @@ export class Logger extends EventEmitter {
     }
   }
 
+  /**
+   * Create a child `Logger` instance.
+   * @param name: The name of the child instance.
+   * @param options: The options for the child instance.
+   * @returns {Logger}
+   */
   public create(name: string, options: LoggerOptions = {}) {
     if (!options.transports) {
       options.transports = this.transports;
@@ -128,6 +239,14 @@ export class Logger extends EventEmitter {
     return null;
   }
 
+  /**
+   * Parse, validate, and pass a log entry to all associated transports.
+   * @param level: The level of the log entry.
+   * @param messageOrData: Either the message (string) or data (Object) for the log entry. Data can be parsed into a
+   * message if `template` is defined on the instance.
+   * @param data: Data for log entry (if no `message` is specified). Required if a message is not specified and
+   * `template` is defined on the instance.
+   */
   public log(level: string, messageOrData: string | Object, data?: Object) {
     let message: string;
     if (!this.levels.hasOwnProperty(level)) {
@@ -156,6 +275,12 @@ export class Logger extends EventEmitter {
     }
   }
 
+  /**
+   * Find or create a child instance. If child instance has not already been created, `options` is inherited from this
+   * instance.
+   * @param name: The name of the child instance.
+   * @returns {Logger}
+   */
   public get(name: string) {
     let result = this.find(name);
 
@@ -166,6 +291,11 @@ export class Logger extends EventEmitter {
     return result;
   }
 
+  /**
+   * Register a child instance.
+   * @param logger: The child logger.
+   * @returns {boolean}: If `false`, child is already registered, else returns `true`.
+   */
   public register(logger: Logger) {
     if (this.children.indexOf(logger) === -1) {
       for (const child of this.children) {
@@ -179,6 +309,10 @@ export class Logger extends EventEmitter {
     return false;
   }
 
+  /**
+   * Associate a transport to the instance. Transports are executed from `log` method.
+   * @param transport
+   */
   public use(transport: Transport) {
     if (this.transports.indexOf(transport) !== -1) {
       return;

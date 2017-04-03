@@ -66,6 +66,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Options associated with a <code>Logger</code> instance. Each property is optional, and as such, have sensible defaults.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -81,7 +88,6 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="loggeroptions.html#level" class="tsd-kind-icon">level</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="loggeroptions.html#levels" class="tsd-kind-icon">levels</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="loggeroptions.html#template" class="tsd-kind-icon">template</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="loggeroptions.html#transports" class="tsd-kind-icon">transports</a></li>
@@ -93,24 +99,21 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="level" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> level</h3>
-					<div class="tsd-signature tsd-kind-icon">level<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L12">Logger.ts:12</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="levels" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> levels</h3>
 					<div class="tsd-signature tsd-kind-icon">levels<span class="tsd-signature-symbol">:</span> <a href="levels.html" class="tsd-signature-type">Levels</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L15">Logger.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L56">Logger.ts:56</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Default:</p>
+							<pre><code class="lang-typescript">{ trace: <span class="hljs-number">50</span>, debug: <span class="hljs-number">40</span>, info: <span class="hljs-number">30</span>, warn: <span class="hljs-number">20</span>, error: <span class="hljs-number">10</span> }
+</code></pre>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="template" class="tsd-anchor"></a>
@@ -118,9 +121,26 @@
 					<div class="tsd-signature tsd-kind-icon">template<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L13">Logger.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L45">Logger.ts:45</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>When a log message is not defined, the data associated with it can be used to create the message.
+							For example:</p>
+							<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> logger = <span class="hljs-built_in">require</span>(<span class="hljs-string">'nomatic-logging'</span>);
+logger.template = <span class="hljs-string">'{method} {url} ==&gt; {status} {length} bytes'</span>;
+logger.log(<span class="hljs-string">'info'</span>, {
+ <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,
+ <span class="hljs-attr">url</span>: <span class="hljs-string">'/api/v1/users?page=1'</span>,
+ <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>,
+ <span class="hljs-attr">length</span>: <span class="hljs-number">1203</span>
+};
+</code></pre>
+							<p>The <code>Entry</code> (sent on <code>execute</code> of each associated transport) would include a <code>message</code> property set to
+							<code>GET /api/v1/users?page=1 ==&gt; 200 1203 bytes</code>.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="transports" class="tsd-anchor"></a>
@@ -128,9 +148,14 @@
 					<div class="tsd-signature tsd-kind-icon">transports<span class="tsd-signature-symbol">:</span> <a href="../classes/transport.html" class="tsd-signature-type">Transport</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/78b30fe/src/Logger.ts#L14">Logger.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/182eb4b/src/Logger.ts#L49">Logger.ts:49</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Transports to associated with the <code>Logger</code> instance.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -167,9 +192,6 @@
 					<li class="current tsd-kind-interface">
 						<a href="loggeroptions.html" class="tsd-kind-icon">Logger<wbr>Options</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="loggeroptions.html#level" class="tsd-kind-icon">level</a>
-							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="loggeroptions.html#levels" class="tsd-kind-icon">levels</a>
 							</li>
