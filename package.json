@@ -10,7 +10,7 @@
     "coverage": "nyc report --reporter=html",
     "codeclimate": "nyc report --reporter=text-lcov | codeclimate-test-reporter",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "docs": "typedoc --out ./docs/ --module commonjs --name nomatic-logging --hideGenerator --mode file src"
+    "docs": "typedoc --out ./docs/ --module commonjs --name nomatic-logging --hideGenerator --mode file --excludeExternals --excludePrivate --gaID UA-96699243-1 ./src"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://github.com/bdfoster/nomatic-logging/issues"
   },
-  "homepage": "https://github.com/bdfoster/nomatic-logging#readme",
+  "homepage": "https://bdfoster.github.io/nomatic-logging",
   "devDependencies": {
     "@types/chai": "^3.4.35",
     "@types/mocha": "^2.2.40",
