@@ -1,8 +1,13 @@
 pipeline:
   build:
-    image: node:7
+    image: node:${NODE_VERSION}
     commands:
       - npm install
       - npm test
       - npm run compile
       - npm run coverage
+matrix:
+  NODE_VERSION:
+    - 4
+    - 6
+    - 7
