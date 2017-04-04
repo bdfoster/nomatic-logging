@@ -102,7 +102,7 @@
 					<div class="tsd-signature tsd-kind-icon">levels<span class="tsd-signature-symbol">:</span> <a href="levels.html" class="tsd-signature-type">Levels</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L56">Logger.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L64">logger.ts:64</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -119,7 +119,7 @@
 					<div class="tsd-signature tsd-kind-icon">template<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L45">Logger.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L53">logger.ts:53</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -135,7 +135,7 @@ logger.log(<span class="hljs-string">'info'</span>, {
  <span class="hljs-attr">length</span>: <span class="hljs-number">1203</span>
 };
 </code></pre>
-							<p>The <code>Entry</code> (sent on <code>execute</code> of each associated transport) would include a <code>message</code> property set to
+							<p>The <code>LoggerEntry</code> (sent on <code>execute</code> of each associated transport) would include a <code>message</code> property set to
 							<code>GET /api/v1/users?page=1 ==&gt; 200 1203 bytes</code>.</p>
 						</div>
 					</div>
@@ -146,7 +146,7 @@ logger.log(<span class="hljs-string">'info'</span>, {
 					<div class="tsd-signature tsd-kind-icon">transports<span class="tsd-signature-symbol">:</span> <a href="../classes/transport.html" class="tsd-signature-type">Transport</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L49">Logger.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L57">logger.ts:57</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -180,10 +180,10 @@ logger.log(<span class="hljs-string">'info'</span>, {
 						<a href="consoleoptions.html" class="tsd-kind-icon">Console<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="entry.html" class="tsd-kind-icon">Entry</a>
+						<a href="levels.html" class="tsd-kind-icon">Levels</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="levels.html" class="tsd-kind-icon">Levels</a>
+						<a href="loggerentry.html" class="tsd-kind-icon">Logger<wbr>Entry</a>
 					</li>
 				</ul>
 				<ul class="current">
@@ -206,14 +206,8 @@ logger.log(<span class="hljs-string">'info'</span>, {
 					<li class=" tsd-kind-interface">
 						<a href="transportoptions.html" class="tsd-kind-icon">Transport<wbr>Options</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#transporthandler" class="tsd-kind-icon">Transport<wbr>Handler</a>
-					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../globals.html#console" class="tsd-kind-icon">console</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="../globals.html#transport" class="tsd-kind-icon">transport</a>
 					</li>
 				</ul>
 			</nav>

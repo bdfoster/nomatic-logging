@@ -1,8 +1,8 @@
-import Transport from '../../src/Transport';
-import {Entry} from '../../src/index';
+import {Transport} from '../../src/transport';
+import {LoggerEntry} from '../../src/index';
 
 export class TestTransport extends Transport {
-  public execute(entry: Entry) {
+  public execute(entry: LoggerEntry) {
     this.emit('execute', entry);
   }
 }

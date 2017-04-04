@@ -1,7 +1,15 @@
 import {EventEmitter} from 'nomatic-events';
-import Transport from './Transport';
+import {Transport} from './transport';
 import * as format from 'string-format';
-import {Entry} from './index';
+import * as transport from './transport';
+
+export interface LoggerEntry {
+  name: string;
+  level: string;
+  message: string;
+  date: Date;
+  data?: Object;
+}
 
 /**
  * A specification of log level names and their associated priority. A lower number is given higher priority.
@@ -39,7 +47,7 @@ export interface LoggerOptions {
    *  length: 1203
    * };
    * ```
-   * The `Entry` (sent on `execute` of each associated transport) would include a `message` property set to
+   * The `LoggerEntry` (sent on `execute` of each associated transport) would include a `message` property set to
    * `GET /api/v1/users?page=1 ==> 200 1203 bytes`.
    */
   template?: string;
@@ -82,7 +90,7 @@ export class Logger extends EventEmitter {
   public readonly name: string;
 
   /**
-   * The template to be used when parsing `Entry.data` for an `Entry.message`.
+   * The template to be used when parsing `LoggerEntry.data` for an `LoggerEntry.message`.
    * When a log message is not defined, the data associated with it can be used to create the message.
    *
    * For example:
@@ -96,10 +104,10 @@ export class Logger extends EventEmitter {
    *  length: 1203
    * };
    * ```
-   * The `Entry` (sent on `execute` of each associated transport) would include a `message` property set to
+   * The `LoggerEntry` (sent on `execute` of each associated transport) would include a `message` property set to
    * `GET /api/v1/users?page=1 ==> 200 1203 bytes`.
    *
-   * When defining a template, variables from the log entry's data object are used. The name of the variable should
+   * When defining a template, variables from the log LoggerEntry's data object are used. The name of the variable should
    * be contained within curly braces, i.e. '{key}' would be replaced with `value` if data has a property of `key` with
    * value of `value`.
    *
@@ -163,13 +171,13 @@ export class Logger extends EventEmitter {
 
   /**
    * Prepares an object with all data associated with a log entry.
-   * @param level     The log level associated with the Entry.
-   * @param message   The message associated with the Entry.
-   * @param data      Optional data to associate with the Entry.
-   * @returns {Entry}
+   * @param level     The log level associated with the LoggerEntry.
+   * @param message   The message associated with the LoggerEntry.
+   * @param data      Optional data to associate with the LoggerEntry.
+   * @returns {LoggerEntry}
    */
   private serialize(level: string, message: string, data: Object = null) {
-    const entry: Entry = {
+    const entry: LoggerEntry = {
       name: this.name,
       message: message,
       level: level,
@@ -330,4 +338,8 @@ export class Logger extends EventEmitter {
   }
 }
 
-export default Logger;
+export default new Logger(null, {
+  transports: [
+    transport.console
+  ]
+});

@@ -77,59 +77,18 @@
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface"><a href="interfaces/consoleoptions.html" class="tsd-kind-icon">Console<wbr>Options</a></li>
-								<li class="tsd-kind-interface"><a href="interfaces/entry.html" class="tsd-kind-icon">Entry</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/levels.html" class="tsd-kind-icon">Levels</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/loggerentry.html" class="tsd-kind-icon">Logger<wbr>Entry</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/loggeroptions.html" class="tsd-kind-icon">Logger<wbr>Options</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/transportoptions.html" class="tsd-kind-icon">Transport<wbr>Options</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Type aliases</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias"><a href="globals.html#transporthandler" class="tsd-kind-icon">Transport<wbr>Handler</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Variables</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-variable"><a href="globals.html#console" class="tsd-kind-icon">console</a></li>
-								<li class="tsd-kind-variable"><a href="globals.html#transport" class="tsd-kind-icon">transport</a></li>
 							</ul>
 						</section>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Type aliases</h2>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias">
-					<a name="transporthandler" class="tsd-anchor"></a>
-					<h3>Transport<wbr>Handler</h3>
-					<div class="tsd-signature tsd-kind-icon">Transport<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Transport.ts#L4">Transport.ts:4</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>entry<span class="tsd-signature-symbol">: </span><a href="interfaces/entry.html" class="tsd-signature-type">Entry</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>entry: <a href="interfaces/entry.html" class="tsd-signature-type">Entry</a></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
 					</div>
 				</section>
 			</section>
@@ -138,20 +97,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="console" class="tsd-anchor"></a>
 					<h3>console</h3>
-					<div class="tsd-signature tsd-kind-icon">console<span class="tsd-signature-symbol">:</span> <a href="classes/console.html" class="tsd-signature-type">Console</a><span class="tsd-signature-symbol"> =&nbsp;new Console({level: &#x27;info&#x27;})</span></div>
+					<div class="tsd-signature tsd-kind-icon">console<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;./console&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/transport/index.ts#L5">transport/index.ts:5</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable">
-					<a name="transport" class="tsd-anchor"></a>
-					<h3>transport</h3>
-					<div class="tsd-signature tsd-kind-icon">transport<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;./transport&#x27;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/index.ts#L6">index.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/transport/index.ts#L20">transport/index.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -180,10 +129,10 @@
 						<a href="interfaces/consoleoptions.html" class="tsd-kind-icon">Console<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/entry.html" class="tsd-kind-icon">Entry</a>
+						<a href="interfaces/levels.html" class="tsd-kind-icon">Levels</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/levels.html" class="tsd-kind-icon">Levels</a>
+						<a href="interfaces/loggerentry.html" class="tsd-kind-icon">Logger<wbr>Entry</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/loggeroptions.html" class="tsd-kind-icon">Logger<wbr>Options</a>
@@ -191,14 +140,8 @@
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/transportoptions.html" class="tsd-kind-icon">Transport<wbr>Options</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#transporthandler" class="tsd-kind-icon">Transport<wbr>Handler</a>
-					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#console" class="tsd-kind-icon">console</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#transport" class="tsd-kind-icon">transport</a>
 					</li>
 				</ul>
 			</nav>

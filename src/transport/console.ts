@@ -1,6 +1,6 @@
-import {Transport, TransportOptions} from '../Transport';
+import {Transport, TransportOptions} from './index';
 import * as format from 'string-format';
-import {Entry} from '../index';
+import {LoggerEntry} from '../logger';
 
 export interface ConsoleOptions extends TransportOptions {
   template?: string;
@@ -15,9 +15,11 @@ export class Console extends Transport {
     this.template = options.template || '[{level}]\t{message}';
   }
 
-  execute(entry: Entry) {
+  execute(entry: LoggerEntry) {
     console.log(format(this.template, entry));
   }
 }
 
-export default Console;
+export default new Console({
+  level: 'info'
+});

@@ -137,7 +137,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L110">Logger.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L118">logger.ts:118</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -177,7 +177,7 @@
 					<div class="tsd-signature tsd-kind-icon">children<span class="tsd-signature-symbol">:</span> <a href="logger.html" class="tsd-signature-type">Logger</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L77">Logger.ts:77</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L85">logger.ts:85</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -214,7 +214,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L82">Logger.ts:82</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L90">logger.ts:90</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -229,12 +229,12 @@
 					<div class="tsd-signature tsd-kind-icon">template<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L110">Logger.ts:110</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L118">logger.ts:118</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The template to be used when parsing <code>Entry.data</code> for an <code>Entry.message</code>.
+							<p>The template to be used when parsing <code>LoggerEntry.data</code> for an <code>LoggerEntry.message</code>.
 							When a log message is not defined, the data associated with it can be used to create the message.</p>
 						</div>
 						<p>For example:</p>
@@ -247,9 +247,9 @@ logger.log(<span class="hljs-string">'info'</span>, {
  <span class="hljs-attr">length</span>: <span class="hljs-number">1203</span>
 };
 </code></pre>
-						<p>The <code>Entry</code> (sent on <code>execute</code> of each associated transport) would include a <code>message</code> property set to
+						<p>The <code>LoggerEntry</code> (sent on <code>execute</code> of each associated transport) would include a <code>message</code> property set to
 						<code>GET /api/v1/users?page=1 ==&gt; 200 1203 bytes</code>.</p>
-						<p>When defining a template, variables from the log entry&#39;s data object are used. The name of the variable should
+						<p>When defining a template, variables from the log LoggerEntry&#39;s data object are used. The name of the variable should
 							be contained within curly braces, i.e. &#39;{key}&#39; would be replaced with <code>value</code> if data has a property of <code>key</code> with
 						value of <code>value</code>.</p>
 						<p>By default, a template is not used, so a message must be specified when calling <code>log</code> (or a method associated with
@@ -263,7 +263,7 @@ logger.log(<span class="hljs-string">'info'</span>, {
 					<div class="tsd-signature tsd-kind-icon">transports<span class="tsd-signature-symbol">:</span> <a href="transport.html" class="tsd-signature-type">Transport</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L73">Logger.ts:73</a></li>
+							<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L81">logger.ts:81</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -291,7 +291,7 @@ logger.log(<span class="hljs-string">'info'</span>, {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L133">Logger.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L141">logger.ts:141</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -304,7 +304,7 @@ logger.log(<span class="hljs-string">'info'</span>, {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L142">Logger.ts:142</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L150">logger.ts:150</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -340,7 +340,7 @@ logger.log(<span class="hljs-string">'info'</span>, {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L191">Logger.ts:191</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L199">logger.ts:199</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -369,7 +369,7 @@ logger.log(<span class="hljs-string">'info'</span>, {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L218">Logger.ts:218</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L226">logger.ts:226</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -427,7 +427,7 @@ logger.log(<span class="hljs-string">'info'</span>, {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L232">Logger.ts:232</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L240">logger.ts:240</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -450,7 +450,7 @@ logger.log(<span class="hljs-string">'info'</span>, {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L284">Logger.ts:284</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L292">logger.ts:292</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -479,7 +479,7 @@ logger.log(<span class="hljs-string">'info'</span>, {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L250">Logger.ts:250</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L258">logger.ts:258</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -618,7 +618,7 @@ logger.log(<span class="hljs-string">'info'</span>, {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L299">Logger.ts:299</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L307">logger.ts:307</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -647,7 +647,7 @@ logger.log(<span class="hljs-string">'info'</span>, {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/ad7d663/src/Logger.ts#L316">Logger.ts:316</a></li>
+									<li>Defined in <a href="https://github.com/bdfoster/nomatic-logging/blob/a145baf/src/logger.ts#L324">logger.ts:324</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -758,10 +758,10 @@ logger.log(<span class="hljs-string">'info'</span>, {
 						<a href="../interfaces/consoleoptions.html" class="tsd-kind-icon">Console<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/entry.html" class="tsd-kind-icon">Entry</a>
+						<a href="../interfaces/levels.html" class="tsd-kind-icon">Levels</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/levels.html" class="tsd-kind-icon">Levels</a>
+						<a href="../interfaces/loggerentry.html" class="tsd-kind-icon">Logger<wbr>Entry</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/loggeroptions.html" class="tsd-kind-icon">Logger<wbr>Options</a>
@@ -769,14 +769,8 @@ logger.log(<span class="hljs-string">'info'</span>, {
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/transportoptions.html" class="tsd-kind-icon">Transport<wbr>Options</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#transporthandler" class="tsd-kind-icon">Transport<wbr>Handler</a>
-					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../globals.html#console" class="tsd-kind-icon">console</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="../globals.html#transport" class="tsd-kind-icon">transport</a>
 					</li>
 				</ul>
 			</nav>

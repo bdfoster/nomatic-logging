@@ -1,6 +1,6 @@
 import 'mocha';
 import {expect} from 'chai';
-import {Logger} from '../../src/Logger';
+import {Logger} from '../../src/logger';
 import TestTransport from '../fixtures/TestTransport';
 
 describe('Logger', () => {
