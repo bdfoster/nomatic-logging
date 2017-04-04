@@ -1,11 +1,18 @@
 pipeline:
   build:
+    when:
+      event: [tag, push, pull_request]
     image: node:${NODE_VERSION}
     commands:
       - npm install
       - npm test
+  publish:
+    when:
+      status: success
+      event: tag
+    commands:
       - npm run compile
-      - npm run coverage
+    
 matrix:
   NODE_VERSION:
     - 6
