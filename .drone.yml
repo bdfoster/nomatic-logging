@@ -17,7 +17,7 @@ pipeline:
       - COVERALLS_SERVICE_JOB_ID=${DRONE_JOB_NUMBER}
     commands:
       - npm install -g coveralls
-      - nyc report --reporter=text-lcov | coveralls
+      - npm run coveralls
   publish:
     when:
       status: success
