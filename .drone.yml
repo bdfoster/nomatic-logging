@@ -2,11 +2,7 @@ pipeline:
   build:
     when:
       event: [tag, push, pull_request]
-    image: node:${NODE_VERSION}
-    environment:
-      COVERALLS_SERVICE_NAME=${CI}
-      COVERALLS_SERVICE_JOB_ID=${DRONE_JOB_NUMBER}
-      
+    image: node:${NODE_VERSION}      
     commands:
       - npm install
       - npm test
