@@ -5,7 +5,14 @@ pipeline:
     image: node:${NODE_VERSION}      
     commands:
       - npm install
+
+  test:
+    when:
+      event: [tag, push, pull_request]
+    image: node:${NODE_VERSION}
+    commands:
       - npm test
+
   analysis:
     when:
       status: success
@@ -19,6 +26,7 @@ pipeline:
     commands:
       - npm install -g coveralls
       - npm run coveralls
+
   publish:
     when:
       status: success
