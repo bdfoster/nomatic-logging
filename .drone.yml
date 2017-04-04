@@ -9,7 +9,8 @@ pipeline:
   analysis:
     when:
       status: success
-    image: node:6
+      matrix:
+        NODE_VERSION: 6
     environment:
       - COVERALLS_SERVICE_NAME=${CI}
       - COVERALLS_SERVICE_JOB_ID=${DRONE_JOB_NUMBER}
