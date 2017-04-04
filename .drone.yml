@@ -15,6 +15,7 @@ pipeline:
     environment:
       - COVERALLS_SERVICE_NAME=${CI}
       - COVERALLS_SERVICE_JOB_ID=${DRONE_JOB_NUMBER}
+      - COVERALLS_GIT_COMMIT=${DRONE_GIT_COMMIT_SHA}
     commands:
       - npm install -g coveralls
       - npm run coveralls
