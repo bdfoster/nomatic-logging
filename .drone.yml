@@ -1,0 +1,7 @@
+pipeline:
+  build:
+    image: node:7
+    commands:
+      - npm test
+      - npm run compile
+      - npm run coverage
