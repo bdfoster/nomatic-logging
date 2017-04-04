@@ -11,6 +11,7 @@ pipeline:
       status: success
       matrix:
         NODE_VERSION: 6
+    image: node:${NODE_VERSION}
     environment:
       - COVERALLS_SERVICE_NAME=${CI}
       - COVERALLS_SERVICE_JOB_ID=${DRONE_JOB_NUMBER}
