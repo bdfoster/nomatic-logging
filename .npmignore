@@ -2,7 +2,7 @@
 node_modules/
 test/
 .codeclimate.yml
-.travis.yml
+.drone.yml
 coverage/
 tsconfig.json
 examples/
