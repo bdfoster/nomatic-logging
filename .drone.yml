@@ -25,6 +25,7 @@ pipeline:
       - COVERALLS_GIT_COMMIT=${DRONE_GIT_COMMIT_SHA}
     commands:
       - npm install -g coveralls
+      - export COVERALLS_REPO_TOKEN=${COVERALLS_REPO_TOKEN}
       - npm run coveralls
 
   publish:
