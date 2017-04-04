@@ -26,7 +26,8 @@ pipeline:
     commands:
       - npm install -g coveralls
       - export COVERALLS_REPO_TOKEN=${COVERALLS_REPO_TOKEN}
-      - npm run coveralls
+      - export COVERALLS_SERVICE_NAME=${CI}
+      - export COVERALLS_GIT_COMMIT=${DRONE_GIT_COMMIT_SHA}
 
   publish:
     when:
