@@ -8,6 +8,5 @@ pipeline:
       - npm run coverage
 matrix:
   NODE_VERSION:
-    - 4
     - 6
     - 7
