@@ -1,0 +1,12 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: node
+    tag: node-version
+inputs:
+  repo
+  node-version
+run:
+  path: npm
+  args: [ install ]
