@@ -5,8 +5,8 @@ image_resource:
     repository: node
     tag: node-version
 inputs:
-  - repo
-  - node-version
+- name: node-version
+- name: repo
 run:
   path: npm
   args: [ install ]
