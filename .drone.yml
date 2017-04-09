@@ -2,7 +2,7 @@ pipeline:
   build:
     when:
       event: [tag, push, pull_request]
-    image: node:${NODE_VERSION}      
+    image: bdfoster/node:${NODE_VERSION}      
     commands:
       - npm install
 
