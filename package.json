@@ -30,7 +30,7 @@
   },
   "homepage": "https://bdfoster.github.io/nomatic-logging",
   "devDependencies": {
-    "@types/chai": "^3.4.35",
+    "@types/chai": "^3.5.2",
     "@types/mocha": "^2.2.40",
     "chai": "^3.5.0",
     "cross-env": "^4.0.0",
