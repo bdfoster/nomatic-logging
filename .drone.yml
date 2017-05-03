@@ -2,7 +2,7 @@ pipeline:
   build:
     when:
       event: [tag, push, pull_request]
-    image: bdfoster/node:${NODE_VERSION}      
+    image: node:${NODE_VERSION}      
     commands:
       - npm install
 
@@ -20,13 +20,11 @@ pipeline:
         NODE_VERSION: 6
     image: node:${NODE_VERSION}
     commands:
-      - npm install -g coveralls codeclimate-test-reporter
+      - npm install -g coveralls
       - export COVERALLS_REPO_TOKEN=${COVERALLS_REPO_TOKEN}
       - export COVERALLS_SERVICE_NAME=${CI}
       - export COVERALLS_GIT_COMMIT=${DRONE_COMMIT_SHA}
-      - export CODECLIMATE_REPO_TOKEN=${CODECLIMATE_REPO_TOKEN}
       - npm run coveralls
-      - npm run codeclimate
   publish:
     when:
       status: success
