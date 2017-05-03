@@ -8,7 +8,6 @@
     "compile": "tsc",
     "test": "cross-env NODE_ENV=test nyc mocha",
     "coverage": "nyc report --reporter=html",
-    "codeclimate": "nyc report --reporter=text-lcov | codeclimate-test-reporter",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "docs": "typedoc --out ./docs/ --module commonjs --name nomatic-logging --hideGenerator --mode file --excludeExternals --excludePrivate --gaID UA-96699243-1 ./src"
   },
