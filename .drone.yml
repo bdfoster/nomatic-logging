@@ -25,12 +25,14 @@ pipeline:
       - export COVERALLS_SERVICE_NAME=${CI}
       - export COVERALLS_GIT_COMMIT=${DRONE_COMMIT_SHA}
       - npm run coveralls
+
   publish:
     when:
       status: success
       event: tag
-    commands:
-      - npm run compile
+    matrix:
+      NODE_VERSION: 6
+    image: plugins/npm
     
 matrix:
   NODE_VERSION:
