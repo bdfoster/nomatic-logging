@@ -26,6 +26,16 @@ pipeline:
       - export COVERALLS_GIT_COMMIT=${DRONE_COMMIT_SHA}
       - npm run coveralls
 
+  compile:
+    when:
+      status: success
+      matrix:
+        NODE_VERSION: 6
+      event: tag
+    image: node:${NODE_VERSION}
+    commands:
+      - npm run compile
+
   publish:
     when:
       status: success
