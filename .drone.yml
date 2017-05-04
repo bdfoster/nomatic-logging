@@ -1,14 +1,10 @@
 pipeline:
   build:
-    when:
-      event: [tag, push, pull_request]
     image: node:${NODE_VERSION}      
     commands:
       - npm install
 
   test:
-    when:
-      event: [tag, push, pull_request]
     image: node:${NODE_VERSION}
     commands:
       - npm test
