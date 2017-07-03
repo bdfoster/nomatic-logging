@@ -6,7 +6,7 @@ export interface ConsoleOptions extends TransportOptions {
   template?: string;
 }
 
-export class Console extends Transport {
+export class ConsoleTransport extends Transport {
   public template: string;
 
   constructor(options: ConsoleOptions) {
@@ -20,6 +20,4 @@ export class Console extends Transport {
   }
 }
 
-export default new Console({
-  level: 'info'
-});
+export default ConsoleTransport;

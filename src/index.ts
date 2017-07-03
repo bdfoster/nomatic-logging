@@ -1,3 +1,3 @@
 export * from './logger';
-export const transport = require('./transport');
-export const Transport = transport.Transport;
+export * from './transports';
+export * from './transports/ConsoleTransport';

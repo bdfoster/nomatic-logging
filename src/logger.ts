@@ -1,7 +1,7 @@
 import {EventEmitter} from 'nomatic-events';
-import {Transport} from './transport';
+import {Transport} from './transports';
 import * as format from 'string-format';
-import * as transport from './transport';
+import ConsoleTransport from './transports/ConsoleTransport';
 
 export interface LoggerEntry {
   name: string;
@@ -340,6 +340,8 @@ export class Logger extends EventEmitter {
 
 export default new Logger(null, {
   transports: [
-    transport.console
+    new ConsoleTransport({
+      level: 'info'
+    })
   ]
 });

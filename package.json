@@ -37,6 +37,7 @@
     "nyc": "^11.0.1",
     "source-map-support": "^0.4.15",
     "ts-node": "^3.0.2",
+    "typedoc": "^0.7.1",
     "typescript": "^2.2.1"
   },
   "dependencies": {
