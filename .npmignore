@@ -1,8 +1,6 @@
 .idea/
 node_modules/
 test/
-.codeclimate.yml
-.drone.yml
 coverage/
 tsconfig.json
 examples/
