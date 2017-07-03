@@ -1,7 +1,7 @@
-import {Transport} from '../../src/transport';
-import {LoggerEntry} from '../../src/index';
+import {transport} from '../../src';
+import {LoggerEntry} from '../../src';
 
-export class TestTransport extends Transport {
+export class TestTransport extends transport.Transport {
   public execute(entry: LoggerEntry) {
     this.emit('execute', entry);
   }
