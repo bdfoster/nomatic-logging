@@ -3,7 +3,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/bdfoster/nomatic-logging.svg)](https://greenkeeper.io/)
 [![GitHub release](https://img.shields.io/github/release/bdfoster/nomatic-logging.svg)](https://github.com/bdfoster/nomatic-logging/releases)
 [![npm](https://img.shields.io/npm/v/nomatic-logging.svg)](https://www.npmjs.com/package/nomatic-logging)
-[![Build Status](http://drone.bdfoster.com/api/badges/bdfoster/nomatic-logging/status.svg)](http://drone.bdfoster.com/bdfoster/nomatic-logging)
+[![Build Status](https://img.shields.io/travis/bdfoster/nomatic-logging/master.svg)](https://travis-ci.org/bdfoster/nomatic-logging)
 [![Coverage Status](https://img.shields.io/coveralls/bdfoster/nomatic-logging/master.svg)](https://coveralls.io/github/bdfoster/nomatic-logging)
 [![David dependencies](https://img.shields.io/david/bdfoster/nomatic-logging.svg)](https://david-dm.org/bdfoster/nomatic-logging)
 [![David devDependencies](https://img.shields.io/david/dev/bdfoster/nomatic-logging.svg)](https://david-dm.org/bdfoster/nomatic-logging?type=dev)
