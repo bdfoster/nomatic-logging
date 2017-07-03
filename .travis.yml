@@ -1,0 +1,33 @@
+sudo: false
+language: node_js
+node_js:
+- '6'
+- '7'
+env:
+  global:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
+  code_climate:
+    repo_token:
+      secure: AocTbVG210r/xQVGxo10HqMP8GZFVI2qswAQfjRwqh3RhmS7d3S+/MlEKzlkEdULuOtVwzACjJ6dh1loLBJdS9r5ptk9AQ28EDSoaXekvdYZFqJfZbRYIEtf0rP6vvx8/e8K2b9SQrxNVF0z4odi9yNuOt2jbLJfCRHrxojViRgL5CDowMMAWneP3rtKNKxh4YdahKVPo3S7RybUnaYejzcRc0OG/rpg+kHmD9a8AoOTOLgifyEwyL+R/aYTptzEwzlJyNG9NLHuxHGiHCKp7RadbgsYJiI/6RMaGvloijQVbh8kqPUW7k9LYv2g/YljxtbwI8824IPSQSjWdBhsWMs7dwUzNrWa48qC5D6f1RytPIgPBI+wK+tsh/4bCVnwj8zDm9Q9g3kTEpyv6AY6aOnQXHk7WD95D8gHXm5/rfS8/dFqFfXtW/abIkdW+EURYIBB7SSohj72EvF1KacUYCc6Pr5GtuXZ4O7OZwr5YN90ZOAZ5xrwEz7Rmk2TPQULbdMuVmZH/K/s3BgqM4ClUtONpiuv+MCdgGTOZ6uxJ4qmOIDnNqSuL+OSVoKwcGCmTh6nsF4bQDobpBVYmDQch5SzAQ3yziSqc4TiJMBhUbqMEhagG72EU+EmsvVyBJt+qCmUgN4i0Lixl7yUP8bOIsZPpxlPIgVQ9itZP9w2a0M=
+script:
+  - npm test
+after_success:
+  - npm install -g codeclimate-test-reporter
+  - nyc report --reporter=text-lcov | codeclimate-test-reporter
+before_deploy:
+  - npm run compile
+deploy:
+  provider: npm
+  email: bdfoster89@gmail.com
+  api_key:
+    secure: rCtWeKm/sM2VIknmHwE0p04r7tWvXEocZHVzT+0ScF2WVFUZ/3rC8TqKUBS7mne5INH7uY6Yk+yifRV4J5+mf9RfrVwnNkqZR1j/Q3T7RVtiS2LA8LiX9J5VZV8Pp17S6EacIH/E7RILwQsrGcQrfGT/RvpS1xYiEkG0PGe7nZvpYs/QEGoC94r34ykJYgKppPRw5rzB96KAmUbwyXI/DzCZ4rcZBPvBNU16hwhsx6cqNJYp3zsHcH9ZRq4echB4vwlIhUL+DFls06M11A8qK9n4Hh9BkjIl8cxaovzdOlLtppezGMlyvypILdmqGLZS2pnxwMDAbD+1LAhUfez8a1f5XnxPDZJbGdhVgfzfG2zx7yciQsHnbufffDZI9+tcdg6rSTJlbtpfoPHtUL+X0wWrTjhuv3zboxHHKB7jEKCuQmH2lkQTwMTbkTOZZueYUWO34r8ShH3Yj2fiouO/jAPWLTSQk7WWQHK1yeQLORhU9F+s12+1Y2392uVi515nL/WIfJ1IQLSuZIMQPmYZPC7y51TGzUO87C5mMIc9TiP/y2voYVlC5VZy31nWxFAp7F7OU0QczozNrttX1O6XaT4RE3wpB3sMivjYawnO+HbVPAO5yW6Do4Hk0NzwboWMbGEpR/EfxUTM3TxAvnoy2BgAlXg162Si+tFo9aSzRng=
+  on:
+    tags: true
+    repo: bdfoster/nomatic-logging
+  skip_cleanup: true
