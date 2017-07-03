@@ -1,6 +1,6 @@
 {
   "name": "nomatic-logging",
-  "version": "0.5.6",
+  "version": "0.6.0",
   "description": "Seriously awesome logging library built for Node.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
