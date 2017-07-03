@@ -17,4 +17,6 @@ export abstract class Transport extends EventEmitter {
   public abstract execute(entry: LoggerEntry);
 }
 
-export const console = require('./console');
+export default {
+  console = require('./console')
+};
