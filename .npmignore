@@ -6,3 +6,4 @@ tsconfig.json
 examples/
 .nyc_output/
 docs/
+.travis.yml
