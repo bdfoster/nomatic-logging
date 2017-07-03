@@ -338,6 +338,8 @@ export class Logger extends EventEmitter {
   }
 }
 
+export const transport = transport;
+
 export default new Logger(null, {
   transports: [
     transport.console
