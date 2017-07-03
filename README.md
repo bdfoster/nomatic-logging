@@ -38,11 +38,14 @@ const logger = require('nomatic-logging');
 ```
 ...which is equivalent to (if the namespace is not already taken):
 ```javascript
-const Logger = require('nomatic-logging').Logger;
-const transport = require('nomatic-logging').transport;
+const logging = require('nomatic-logging');
+const Logger = logging.Logger;
+const ConsoleTransport = logging.ConsoleTransport;
 const logger = new Logger('root', {
     transports: [
-        transport.console // same as calling: new transport.Console({level: 'info'})
+        new ConsoleTransport({
+            level: 'info'
+        })
     ]
 });
 ```

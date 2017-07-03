@@ -1,11 +1,11 @@
 import 'mocha';
 import {expect} from 'chai';
-import {Console} from '../../../src/transport/console';
+import {ConsoleTransport} from '../../../src';
 
-describe('Console', () => {
-  let instance: Console;
+describe('ConsoleTransport', () => {
+  let instance: ConsoleTransport;
   beforeEach(() => {
-    instance = new Console({level: 'debug'});
+    instance = new ConsoleTransport({level: 'debug'});
   });
 
   describe('#constructor()', () => {
