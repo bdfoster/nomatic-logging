@@ -1,6 +1,6 @@
 import {EventEmitter} from 'nomatic-events';
-import {Transport} from './transports';
 import * as format from 'string-format';
+import {Transport} from './transports';
 import ConsoleTransport from './transports/ConsoleTransport';
 
 export interface LoggerEntry {
@@ -158,7 +158,7 @@ export class Logger extends EventEmitter {
       if (!this[level]) {
         this[level] = (messageOrData: string | Object, data?: Object) => {
           return this.log(level, messageOrData, data);
-        }
+        };
       }
     }
 
@@ -290,7 +290,7 @@ export class Logger extends EventEmitter {
    * @returns {Logger}
    */
   public get(name: string) {
-    let result = this.find(name);
+    const result = this.find(name);
 
     if (!result) {
       return this.create(name);
