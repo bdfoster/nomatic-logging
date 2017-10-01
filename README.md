@@ -1,14 +1,17 @@
 # nomatic-logging
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/bdfoster/nomatic-logging.svg)](https://greenkeeper.io/)
+[![Semantic Release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![GitHub release](https://img.shields.io/github/release/bdfoster/nomatic-logging.svg)](https://github.com/bdfoster/nomatic-logging/releases)
 [![npm](https://img.shields.io/npm/v/nomatic-logging.svg)](https://www.npmjs.com/package/nomatic-logging)
-[![Build Status](https://img.shields.io/travis/bdfoster/nomatic-logging/master.svg)](https://travis-ci.org/bdfoster/nomatic-logging)
-[![Coverage Status](https://img.shields.io/coveralls/bdfoster/nomatic-logging/master.svg)](https://coveralls.io/github/bdfoster/nomatic-logging)
-[![David dependencies](https://img.shields.io/david/bdfoster/nomatic-logging.svg)](https://david-dm.org/bdfoster/nomatic-logging)
-[![David devDependencies](https://img.shields.io/david/dev/bdfoster/nomatic-logging.svg)](https://david-dm.org/bdfoster/nomatic-logging?type=dev)
+[![Build Status](https://travis-ci.org/bdfoster/nomatic-logging.svg?branch=greenkeeper%2Finitial)](https://travis-ci.org/bdfoster/nomatic-logging)
+[![Coverage Status](https://coveralls.io/repos/github/bdfoster/nomatic-logging/badge.svg)](https://coveralls.io/github/bdfoster/nomatic-logging)
+[![Known Vulnerabilities](https://snyk.io/test/github/bdfoster/nomatic-logging/badge.svg)](https://snyk.io/test/github/bdfoster/nomatic-logging)
+[![dependencies Status](https://david-dm.org/bdfoster/nomatic-logging/status.svg)](https://david-dm.org/bdfoster/nomatic-logging)
+[![devDependencies Status](https://david-dm.org/bdfoster/nomatic-logging/dev-status.svg)](https://david-dm.org/bdfoster/nomatic-logging?type=dev)
 [![License](https://img.shields.io/github/license/bdfoster/nomatic-logging.svg)](https://github.com/bdfoster/nomatic-logging/blob/master/LICENSE)
 
+### Overview
 **Get serious about logging.** This library takes the best concepts of
 [winston](https://github.com/winstonjs/winston) and [bunyan](https://github.com/trentm/node-bunyan) to create a flexible
 yet elegant logging solution for any Node.js library or application. You decide what to do with generated logs by using
@@ -16,7 +19,7 @@ the included transports or creating your own, very easily. You can even decide h
 dependencies (if they are using this library, of course). A log doesn't have to be just a message, either. You can
 data to the log message or have a message generated for you from the data via templates.
 
-## Goals
+### Goals
 * **Reliable**: It should fail predictably, and with valid cause. Log data is sensitive and important to determining the
 status of the dependent application. This is done with extensive unit and integration testing along with proper
 semantic versioning.
@@ -25,13 +28,13 @@ cases.
 * **Elegant**: It should be easy to get started, yet support complex use cases when needed.
 * **Fast**: Logging is boring, but essential. Do what we need to do, quickly, and get out of the way.
 
-## Installation
+### Installation
 You can install from [npm](https://www.npmjs.com/package/nomatic-logging) by doing:
 ```bash
 npm install --save nomatic-logging
 ```
 
-## Basic Usage
+### Basic Usage
 To get the default ```Logger```:
 ```javascript
 const logger = require('nomatic-logging');
@@ -169,12 +172,12 @@ logger.get('app'); // returns the previously created Logger instance of the same
 logger.get('app2'); // creates then returns a Logger instance with `name` of 'app2'
 ```
 
-## TypeScript
+### TypeScript
 This library is developed with [TypeScript](http://www.typescriptlang.org/), and as such, includes definitions.
 However, you do not even need to know what TypeScript is to use this package. The compiled project is included in the
 [npm package](http://npmjs.com/package/nomatic-logging).
 
-## Testing
+### Testing
 You can run tests by doing:
 ```bash
 npm test
@@ -187,7 +190,7 @@ I do strive for 100% code coverage since this is a very small library. I would a
 If you need help with writing tests, ping me and I will either write them for you (if it's small enough) or give you
 guidance on how to do so.
 
-## Future Plans
+### Future Plans
 * Make usable in both Node.js and the browser (currently only supported in Node.js)
 * Add more transports (either included in the main project or as plugins), including:
   - HTTP (sending log entries via JSON or text to a remote server)
@@ -195,7 +198,7 @@ guidance on how to do so.
   - Node.js streams
 * Improve test cases, remove clutter, etc. to build even more confidence in the project
 
-## Contributing / Support
+### Contributing / Support
 Please note that this software is in the early stages of development, but is in production use in several of my
 personal projects and university/work endeavors.
 

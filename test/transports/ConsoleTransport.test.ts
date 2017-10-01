@@ -1,6 +1,6 @@
 import 'mocha';
 import {expect} from 'chai';
-import {ConsoleTransport} from '../../../src';
+import {ConsoleTransport} from '../../src';
 
 describe('ConsoleTransport', () => {
   let instance: ConsoleTransport;

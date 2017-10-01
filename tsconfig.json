@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
+    "lib": ["es2017", "dom"],
     "sourceMap": true,
     "module": "commonjs",
     "moduleResolution": "node",
@@ -12,16 +13,10 @@
     "removeComments": true,
     "noLib": false,
     "preserveConstEnums": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "outDir": "./dist"
+    "suppressImplicitAnyIndexErrors": true
   },
   "include": [
-    "**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "test",
-    "dist"
+    "src/**/*.ts"
   ],
   "compileOnSave": true
 }

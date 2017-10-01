@@ -1,6 +1,6 @@
 import 'mocha';
 import {expect} from 'chai';
-import TestTransport from '../fixtures/TestTransport';
+import TestTransport from './fixtures/TestTransport';
 
 describe('Transport', () => {
   let instance: TestTransport;

@@ -1,9 +1,10 @@
-.idea/
-node_modules/
-test/
+/.idea/
+/test/
+/docs/
+.travis.yml
+.nycrc
+.npmrc
+tslint.json
 coverage/
 tsconfig.json
-examples/
 .nyc_output/
-docs/
-.travis.yml
