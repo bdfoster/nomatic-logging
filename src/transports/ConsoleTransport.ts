@@ -1,6 +1,6 @@
-import {Transport, TransportOptions} from './index';
 import * as format from 'string-format';
 import {LoggerEntry} from '../logger';
+import {Transport, TransportOptions} from './index';
 
 export interface ConsoleOptions extends TransportOptions {
   template?: string;
