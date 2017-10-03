@@ -37,7 +37,7 @@
     "@types/mocha": "^2.2.43",
     "chai": "^4.1.2",
     "cross-env": "^5.0.5",
-    "mocha": "^3.5.3",
+    "mocha": "^4.0.0",
     "nyc": "^11.2.1",
     "semantic-release": "^8.0.4",
     "ts-node": "^3.3.0",
