@@ -1,5 +1,5 @@
 import {EventEmitter} from 'nomatic-events';
-import {LoggerEntry} from '../logger';
+import {LoggerEntry} from '../../src';
 
 export interface TransportOptions {
   level?: string;
