@@ -1,5 +1,5 @@
 import * as format from 'string-format';
-import {LoggerEntry} from '../logger';
+import {LoggerEntry} from '../../src';
 import {Transport, TransportOptions} from './index';
 
 export interface ConsoleOptions extends TransportOptions {
