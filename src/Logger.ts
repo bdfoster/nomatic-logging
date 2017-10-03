@@ -65,6 +65,7 @@ export interface LoggerOptions {
 }
 
 export class Logger extends EventEmitter {
+    [key: string]: any;
     private _levels: LoggerLevels = {
         trace: 50,
         debug: 40,
