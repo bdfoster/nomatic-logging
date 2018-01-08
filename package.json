@@ -46,7 +46,7 @@
     "typescript": "^2.5.3"
   },
   "dependencies": {
-    "@types/node": "^8.0.31",
+    "@types/node": "^9.3.0",
     "nomatic-events": "^3.0.0",
     "string-format": "^0.5.0"
   }
